@@ -1,0 +1,212 @@
+%
+% File acl2015.tex
+%
+% Contact: car@ir.hit.edu.cn, gdzhou@suda.edu.cn
+%%
+%% Based on the style files for ACL-2014, which were, in turn,
+%% Based on the style files for ACL-2013, which were, in turn,
+%% Based on the style files for ACL-2012, which were, in turn,
+%% based on the style files for ACL-2011, which were, in turn, 
+%% based on the style files for ACL-2010, which were, in turn, 
+%% based on the style files for ACL-IJCNLP-2009, which were, in turn,
+%% based on the style files for EACL-2009 and IJCNLP-2008...
+
+%% Based on the style files for EACL 2006 by 
+%%e.agirre@ehu.es or Sergi.Balari@uab.es
+%% and that of ACL 08 by Joakim Nivre and Noah Smith
+
+\documentclass[11pt]{article}
+\usepackage{acl2015}
+\usepackage{times}
+\usepackage{booktabs}
+\usepackage{latexsym}
+
+%\setlength\titlebox{5cm}
+
+% You can expand the titlebox if you need extra space
+% to show all the authors. Please do not make the titlebox
+% smaller than 5cm (the original size); we will check this
+% in the camera-ready version and ask you to change it back.
+
+
+\title{Fusion Techniques for Semantical Related Tasks}
+
+\author{First Author\\
+  Affiliation / Address line 1 \\
+  Affiliation / Address line 2 \\
+  Affiliation / Address line 3 \\
+  {\tt email@domain} \\\And
+  Second Author \\
+  Affiliation / Address line 1 \\
+  Affiliation / Address line 2 \\
+  Affiliation / Address line 3 \\
+  {\tt email@domain} \\}
+
+\date{}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+In this paper we explore the use of well-known multi-modal fusion techniques to solve two prominent Natural Language Processing tasks. Specifically, we focus on solving Named Entity Recognition and Word Sense Induction and Disambiguation by applying feature-combination methods that have already shown their efficiency in the multi-media analysis domain. We present a series of experiments employing fusion techniques in order to combine textual linguistic features. Our intuition is that by combining different types of features we may find semantic similarities among words at different levels. Thus, the combination (and recombination) of these levels may yield gains in terms of performance.
+% To our knowledge, employing these techniques has not been studied for the tasks we address in this paper. 
+We test the proposed fusion techniques on three datasets for named entity recognition and two for word sense disambiguation and induction. Our results show that the combination of textual features indeed improves the performance compared to single feature and the trivial feature concatenation.
+\end{abstract}
+
+
+\section{Introduction}
+Named Entity Recognition (NER) is the well-known Natural Language Processing (NLP) task
+of automatically discovering, within a text, mentions that belong to a well-defined semantic category. The classic examples of an entity are Loca-
+tion, Organization and Person. The task is of great importance for more complex NLP systems, e.g, relation extraction, opinion mining. The majority of the current NER systems follow one of two ways: via patterns, either manually created or automatically extracted or by training a supervised machine learning algorithm with large quantities
+of text. The latter being the currently more popular solution to this task.
+
+In the latter case, as with any supervised model, we need to first define a set of features that will
+better represent each token. In this work, we make use of three different types of linguistic data,
+that is, (1) lexical co-occurrence, (2) grammatical dependency relations and (3) constituent-tree branch membership to try and solve the NER task.
+More importantly, we propose a fusion framework that uses different methods to combine these three sources of information (among others) into a single representation model.
+
+It has been shown that in different domains, e.g, information retrieval (Ah-Pine et al., 2015), lexicon learning (Vulic et al., 2016), coreference resolution (Eisenstein and Davis, 2007); different types of representations (different modalities) can be combined in order to take advantage of the complementarity existing among them. Here, we
+test the effectiveness of combining the three types of data mentioned above in two different textual domains. Our contributions are: we apply well-known fusion techniques in the context of NER. Namely, we merge typical linguistic data and thoroughly analyze the advantages and short-comings of each of the proposed representation spaces. We
+show that the fusion techniques we use generally improve the performance of systems using a single type of linguistic data.
+\section{Background and Related Work}                                                                                                                   
+\subsection{Early and Late Fusion}
+
+In the recent multi-modal fusion literature we can discern two main types of techniques: early fusion and late fusion. We present below a brief introduction to these techniques. We also introduce works that apply one or both of these approaches, while focusing on general NLP tasks. A deeper overview on multi-modal fusion for multimedia analysis can be found in [atrey].
+
+We first consider a set of instances that is represented by two or more modes. to exemplify, we consider a matrix $X_1$ with shape $(n, m)$ and a matrix $X_2$ with shape $(n, p)$ that represent different features (different number of columns) for the same set of individuals (same number of lines).
+These two matrices come from different kinds of modalities, e.g., video, text, images.
+
+In the early fusion setting, we weight each matrix $X_1$ and $X_2$ to control the influence of each modality and then concatenate them column-wise,
+such that we form a matrix EF of shape $(n, m + p)$. Following the literature notation of [vulic], the early fusion representation matrix EF is defined as:
+\begin{equation}
+EF = \alpha \times X_1 || (1 - \alpha) \times X_2
+\end{equation}
+
+where $||$ represents the column-wise concatenation operation and α is the parameter that determines the contribution of each modality. 
+%
+Early fusion has been employed in several multi-modal tasks. For example, [?]. The main advantage of early fusion is that a single unique model is fitted while leveraging the correlations among the concatenated features.
+%
+In contrast, in late fusion the combination of multi-modal features can be performed at the decision level, i.e., using the output of trained models. Independent models $M_1$ and $M_2$ are fitted using matrices $X_1$ and $X_2$ . Both models produce decisions sets $D_1$ and $D_2$ which are subsequently combined into a single final decision set $D_{LF}$.
+%
+The methods used to combine $D_1$ with $D_2$ usually involve one of two types: rule-based (where modalities are combined according to domain-specific knowledge) or linear fusion (e.g., weighting and then adding or multiplying both matrices together).
+%
+Late fusion combines both modalities in the same semantic space. In that sense, in late fusion we can also have a representation instead of a final decision set, i.e., we can combine both matrices $X_1$ and $X_2$ by means of their similarity matrices $S_1$ and $S_2$ . A final representation $LF$ is then calculated as in early fusion. Formally,
+
+\begin{equation}
+LF = \alpha \times S_1 + (1 - \alpha) \times S_2
+\end{equation}
+where $\alpha$ is again a weighting parameter.
+%
+The advantages of late fusion include the combination of features at the same level of representation (either the fusion of decisions or similarity matrices). This makes the fusion process more straight-forward. Also, given that independent models are trained separately, we can chose which algorithm is more adequate for each type of
+features.
+
+In Table [] we show a synthetic table with the
+literature works on fusion cited in this section. We present the task solved by each contribution, the
+type of fusion used, the modalities involved and finally the performance gain obtained while using
+the fusion techniques.
+%
+\subsection{Cross-media similarity fusion}
+In [ahopine], cross-media similarity fusion is employed to propagate a single modal
+similarity into second modal similarity. Specifically, their procedure tries to bridge the semantic
+gap between textual and visual information by using the most similar objects in the textual similarity matrix as a proxy to transfer the information to the visual similarity matrix. In a general sense,
+having two similarity matrices $S_1$ and $S_2$ defined as above, we define the cross-media similarity fusion as:
+
+\begin{equation}
+XF = \mathbf{K}(S_1, k) \cdot S_2
+\end{equation}
+
+where $\mathbf{K}$ is a row-wise function that keeps only the top-k values of the similarity matrix S 1 and
+assigns zero to the rest of the line.
+
+\subsection{Named Entity Recognition}
+Previously we introduced NLP works that made use of a fusion strategy to improve a single modality system. Nonetheless, and to the best of our knowledge, there is no work that addresses NER directly while using fusion techniques from the
+multimedia analysis domain.
+
+\section{Methodology}
+Recall that in this paper we work with three different types of linguistic data extracted directly from
+the text: lexical co-occurrences (LEX), syntactic information (SYN) and constituents tree member-
+ship (CONS). As a starting point baseline, we test each of these features independently by training
+models on each feature matrix separately. Afterwards, we combine the information using four dif-
+ferent fusion configurations: we test Early Fusion (EF), Late Fusion, Cross Early Fusion (XEF) and
+Cross Late Fusion (XLF). We define these fusion settings below. Notice that in Table 2 we present
+the notation and definitions employed. In each of the following definitions, the result of the opera-
+tions is used as input to a Logistic Regression (L1 regularization) to train a model able to predict tags
+on a test set. 
+% include your own bib file like this:
+%\bibliographystyle{acl}
+%\bibliography{acl2015}
+
+\subsection*{Early Fusion}
+$$
+E_\alpha(A,B) = hstack(\alpha * A , (1-\alpha)*B)
+$$
+\subsection*{Late Fusion}
+$$
+L_\beta(A,B) = \beta * A + (1 - \beta) * B
+$$
+\subsection*{Cross  Fusion}
+$$
+X_{\gamma}(A,B) = \mathbf{K}(A,\gamma) \cdot B
+$$
+\vspace{.5cm}
+\section{Experimental Setup}
+\paragraph{Task: Named Entity Recognition}
+Given a word, the goal is to determine what kind of entity, if any, it represents. We use the classic BIO (Beginning, Inside, Outside) tagset for the classic four entities Location, Person, Organization and Miscelaneus. Performance is measured using phrase-level Precision, Recall and F-measure as in the CoNLL-2003 NER task.
+\paragraph{Test Datasets}We work with three corpus coming from different domains:
+\begin{itemize}
+\item [(1)] CoNLL-2003: This dataset was used in the language-independent named entity recognition CoNLL-2003 shared task. It is one of the most classic NER datasets and it is generally used to asses the performance of NER systems. Contains selected news-wire articles from the Reuters Corpus. Each article is annotated manually. It is divided in three parts,  training (\textit{train}) and two testing sets (\textit{testa} and \textit{testb}). The training part contains 219,554 lines, while the test sets contain 55,044 and 50,350 lines, respectively. The task was evaluated on the \textit{testb} file, as in the original task.
+\item [(2)]WikiNER: A more recent dataset, it contains selected English Wikipedia articles, all of them annotated automatically with the author's semi-supervised method. It contains 3,656,439 words. 
+\item[(3)] Wikigold: Also a corpus of Wikipedia articles, annotated manually. I mainly used this dataset for experimentation as it is the smaller, with 41,011 words. While it is faster to perform calculations with this corpus, it may be the case that the models are not able to learn a lot given its size.
+
+\end{itemize}
+
+\begin{table*}[ht]
+\centering
+\begin{tabular}{cl}
+\hline 
+ Word & Contexts \\ 
+\hline 
+Australian & word:Australian, word+1:scientist, word+2:discovers\\ 
+scientist  &  word-1:Australian, word:scientist, word+1:discovers, word+2:star\\ 
+discovers & word-2:Australian, word-1:scientist, $\dots$, word+2:telescope \\ 
+star & word-2:scientist, word-1:discovers, word:star, $\dots$, word+2:telescope \\ 
+with & word-2:discovers, word-1:star, word:with, word+1:telescope \\ 
+telescope  &  word-2:star, word-1:with, word:telescope \\ 
+\hline \
+\end{tabular} 
+\label{tab:lex-contexts}
+\caption{Lexical contexts corresponding to the phrase \textit{Australian scientist discovers start with telescope}.}
+\end{table*} 
+\paragraph{Pre-processing}
+As is usual when preprocessing text before performing named entity recongition, \cite{RatinovR09}, we normalize tokens that include numbers. For example, the token 1980 becomes *DDDD* and 212-325-4751 becomes *DDD*-*DDD*-*DDDD* . This allows a degree of abstraction to tokens that contain years, phone
+numbers, etc.
+\paragraph{Building the data matrices}
+The linguistic information we use is extracted with Stanford’s CoreNLP parser.
+Let $x = (x_1, \dots , x_N )$ be an input phrase.
+\paragraph{Lexical Matrix (LEX)}
+For each token in the corpus, we use a lexical window of two words to the left and two words to the right, plus the token itself. Specifically, for a target word $w$, its lexical context is $(w_{-2}, w_{-2}, w, w_{+1}, w_{+2})$.  For the phrase \textit{Australian scientist discovers start with telescope}, its lexical-based contexts are shown in Table \ref{tab:lex-contexts}.
+\vspace{.6cm}
+
+\paragraph{Syntactical Matrix (SYN)}
+Based on the syntactic features used in   \cite{LevyG14,Panchenko2017}, we derive contexts based on the syntactic relations a word participates in, as well on the Part of Speech (PoS)   .  That is, for a word $w$ with modifiers $m_1, \dots, m_k$ and their corresponding  tags $PoS_{m_1}, \dots, m_k$  and a head $h$ with , we consider the contexts $(m_1, lbl_1). \dots, (m_k, lbl_k), (h, lbl\_inv_h)$ as well . For the phrase \textit{Australian scientist discovers start with telescope} the dependency-based context is shown in Table \ref{tab:syn-contexts}.
+\begin{table*}
+\begin{tabular}{cl}
+\hline 
+ Word & Contexts \\ 
+\hline 
+Australian & scientist/amod\_inv \\ 
+scientist  &  Australian/amod, discovers/nsubj\_inv\\ 
+discovers & scientist/nsubj, star/dobj, telescope/nmod:with \\ 
+star & discovers/dobj\_inv \\ 
+telescope  &  discovers/nmod:with\_inv \\ 
+\hline \
+\end{tabular} 
+\label{tab:syn-contexts}
+\caption{Syntactic contexts corresponding to the phrase \textit{Australian scientist discovers start with telescope}.}
+\end{table*}
+\vspace{.6cm}
+
+% include your own bib file like this:
+\bibliographystyle{acl}
+\bibliography{biblio}
+
+\end{document}

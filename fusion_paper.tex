@@ -20,7 +20,15 @@
 \usepackage{times}
 \usepackage{booktabs}
 \usepackage{latexsym}
-
+\usepackage{graphicx}
+\usepackage{array,etoolbox}
+\usepackage{tikz}
+\preto\tabular{\setcounter{magicrownumbers}{0}}
+%\newcommand{\circlednumber}[1]{\raisebox{.5pt}{\textcircled{\raisebox{-.9pt} {#1}}}}
+\newcommand*\circlednumber[1]{\tikz[baseline=(char.base)]{
+    \node[shape=circle,draw,inner sep=1pt, minimum size=1pt] (char) {#1};}}
+\newcounter{magicrownumbers}
+\def\rownumber{}
 %\setlength\titlebox{5cm}
 
 % You can expand the titlebox if you need extra space
@@ -29,7 +37,7 @@
 % in the camera-ready version and ask you to change it back.
 
 
-\title{Fusion Techniques for Semantical Related Tasks}
+\title{Fusion Techniques for Named Entity Recognition and Word Sense Induction and Disambiguation}
 
 \author{First Author\\
   Affiliation / Address line 1 \\
@@ -54,103 +62,214 @@ We test the proposed fusion techniques on three datasets for named entity recogn
 
 
 \section{Introduction}
-Named Entity Recognition (NER) is the well-known Natural Language Processing (NLP) task
-of automatically discovering, within a text, mentions that belong to a well-defined semantic category. The classic examples of an entity are Loca-
-tion, Organization and Person. The task is of great importance for more complex NLP systems, e.g, relation extraction, opinion mining. The majority of the current NER systems follow one of two ways: via patterns, either manually created or automatically extracted or by training a supervised machine learning algorithm with large quantities
-of text. The latter being the currently more popular solution to this task.
 
-In the latter case, as with any supervised model, we need to first define a set of features that will
-better represent each token. In this work, we make use of three different types of linguistic data,
-that is, (1) lexical co-occurrence, (2) grammatical dependency relations and (3) constituent-tree branch membership to try and solve the NER task.
-More importantly, we propose a fusion framework that uses different methods to combine these three sources of information (among others) into a single representation model.
+Named Entity Recognition (NER) and Word Sense Induction and Disambiguation (WSI/WSD) requires, as other learning tasks, textual features to represent the similarities between words to discern between different words' meanings. 
 
-It has been shown that in different domains, e.g, information retrieval (Ah-Pine et al., 2015), lexicon learning (Vulic et al., 2016), coreference resolution (Eisenstein and Davis, 2007); different types of representations (different modalities) can be combined in order to take advantage of the complementarity existing among them. Here, we
-test the effectiveness of combining the three types of data mentioned above in two different textual domains. Our contributions are: we apply well-known fusion techniques in the context of NER. Namely, we merge typical linguistic data and thoroughly analyze the advantages and short-comings of each of the proposed representation spaces. We
-show that the fusion techniques we use generally improve the performance of systems using a single type of linguistic data.
-\section{Background and Related Work}                                                                                                                   
-\subsection{Early and Late Fusion}
+NER goal is to automatically discover, within a text, mentions that belong to a well-defined semantic category. The classic task of NER involves entities of type Location, Organization, Person and Miscellaneous. The task is of great importance for more complex NLP systems, e.g, relation extraction, opinion mining. The two historical solutions to NER are one of the following: via matching patterns created manually or extracted semi-automatically; or by training a supervised machine learning algorithm with large quantities of annotated text. The latter being the currently more popular solution to this task.
 
-In the recent multi-modal fusion literature we can discern two main types of techniques: early fusion and late fusion. We present below a brief introduction to these techniques. We also introduce works that apply one or both of these approaches, while focusing on general NLP tasks. A deeper overview on multi-modal fusion for multimedia analysis can be found in [atrey].
 
-We first consider a set of instances that is represented by two or more modes. to exemplify, we consider a matrix $X_1$ with shape $(n, m)$ and a matrix $X_2$ with shape $(n, p)$ that represent different features (different number of columns) for the same set of individuals (same number of lines).
-These two matrices come from different kinds of modalities, e.g., video, text, images.
 
-In the early fusion setting, we weight each matrix $X_1$ and $X_2$ to control the influence of each modality and then concatenate them column-wise,
-such that we form a matrix EF of shape $(n, m + p)$. Following the literature notation of [vulic], the early fusion representation matrix EF is defined as:
-\begin{equation}
-EF = \alpha \times X_1 || (1 - \alpha) \times X_2
-\end{equation}
 
-where $||$ represents the column-wise concatenation operation and α is the parameter that determines the contribution of each modality. 
+%In the classic case of NER, we need to determine, given its context, whether a word is referring a person, a location, an organization or another miscelaneous entity. On the other hand, in WSI/WSD the goal is to determine and assign the specific meaning of a target word, again based on its context.
+
+Word Sense Induction and Disambiguation entails two closely related tasks\footnote{Even though these tasks are closely related, they are independent from one another. Still, in this paper we consider them to be a single one.}. WSI aims to automatically discovering the set of possible senses for a target word given a text corpus containing several occurrences of said target word. Meanwhile, WSD takes a set of possible senses and determines the most appropriate sense for each instance of the target word according to the instance's context. WSI is usually approached as an unsupervised learning task, i.e., a cluster method is applied to the words occurring in the instances of a target word. Then, the groups found are interpreted as the senses of the target word. The WSD task is usually solved with knowledge-based approaches, based on BabelNet [] or WordNet [] or more recently with supervised models which require large quantities of annotated data.
+
+As stated before, both tasks rely on features extracted from the text. Usually, these representations are obtained from the sourrounding context of the words of the an input corpus. Mainly,  two types of representations are typically used according to their nature. We call these features lexical and syntactical. 	The first type requires no extra information that that contained already in the analyzed text itself. It consists merely on the tokens sourrounding a word, i.e., those tokens that come before and after in a fixed window of a studied token. The second type, syntactical features, is similar to lexical representation in that we also consider as features the tokens that appear next to the corpus' words. Nonetheless, it requires a a larger degree of language understanding. In particular, these features are based on part of speech tags, phrase constituents information, as well as syntactical interaction between words or syntactical dependencies.
+
+Other features, specific to one task or another may also be employed. For example, in NER, some standard features used in the literature include whether a word begins with an upper-case letter, the type of prefix and suffix of the word itself as well as the context words, and so on.
+
+%In the latter case, as with any supervised model, we need to first define a set of features that will better represent each token. In this work, we make use of three different types of linguistic data, that is, (1) lexical co-occurrence, (2) grammatical dependency relations and (3) constituent-tree branch membership to try and solve the NER task. More importantly, we propose a fusion framework that uses different methods to combine these three sources of information (among others) into a single representation model.
+
+Most of the approaches in the literatire dealing with these task use each of these features independently or stacked together as concatenated columns in an input representation space matrix. In the latter case, features are used without regards to their nature. 
+
+The intuition of the present work is that word similarities may be found at different levels according to the type of features employed. In order to exploit these similarities, we look into multimedia fusion methods. These techniques consider the integration of multimodal representations, or their corresponding similarities, or  decisions product of models trained with these features in order to perform an analysis task.  Particularly, we try to mutually complement independent representations by utilizing said fusion techniques to combine (or fuse) features in the hope of improving the performance of the tasks of interest, specially compared to the use of features independently. 
+
+Fusion techniques have previously shown their efficiency, mainly on image-related tasks, where there is a need to model to leverage the relation  between images and text extracts.
 %
-Early fusion has been employed in several multi-modal tasks. For example, [?]. The main advantage of early fusion is that a single unique model is fitted while leveraging the correlations among the concatenated features.
+%For example, in information retrieval (Ah-Pine et al., 2015), lexicon learning (Vulic et al., 2016), coreference resolution (Eisenstein and Davis, 2007); different types of representations (different modalities) can be combined in order to take advantage of the complementarity existing among them. 
 %
-In contrast, in late fusion the combination of multi-modal features can be performed at the decision level, i.e., using the output of trained models. Independent models $M_1$ and $M_2$ are fitted using matrices $X_1$ and $X_2$ . Both models produce decisions sets $D_1$ and $D_2$ which are subsequently combined into a single final decision set $D_{LF}$.
-%
-The methods used to combine $D_1$ with $D_2$ usually involve one of two types: rule-based (where modalities are combined according to domain-specific knowledge) or linear fusion (e.g., weighting and then adding or multiplying both matrices together).
-%
-Late fusion combines both modalities in the same semantic space. In that sense, in late fusion we can also have a representation instead of a final decision set, i.e., we can combine both matrices $X_1$ and $X_2$ by means of their similarity matrices $S_1$ and $S_2$ . A final representation $LF$ is then calculated as in early fusion. Formally,
+In contrast, in this work we consider the textual features as coming from different modalities. The main contribution of this work is to assess the effectiveness of simple yet untested techniques to combine classical and easy to obtain textual features. 
 
-\begin{equation}
-LF = \alpha \times S_1 + (1 - \alpha) \times S_2
-\end{equation}
-where $\alpha$ is again a weighting parameter.
+The rest of the paper is organized as follows: in section 2, we go into further detail about fusion techniques as well as its application in the NLP domain. We introduce the operator that we use in the followed methodology of our experiments, described in section 3. Then, in section 4 we show the effectiveness of the presented methods by testing them on NER and WSI/WSD and their respective datasets. Finally, in section 5 we present our conclusions and future directions to explore. A more general overview on fusion for multimedia analysis can be found in \cite{AtreyHEK10}.
+
+\section{Background and Related Work}
+ 
+We first describe below the fusion techniques we use in our methodology as well as relevant use cases where they have been employed. Then, we focus exclusively on fusion techniques applied to NLP tasks, which is the general domain of the two tasks (NER and WSI/WSD) we focus on this paper.                                                                                                                 
+\subsection{Multimodal Fusion Techniques}
+Multimodal fusion is a popular technique used in multimedia anlysis tasks. Formally, these techniques integrate multiple media features, the affinities among these attributes or the decisions obtained from systems trained with said features, to obtain rich insights about the data being used and thus to solve a given analysis  task \cite{AtreyHEK10}. We note that these techniques come at the price of augmenting the complexity of a given system by increasing or reducing the sparsity of a given feature matrix.
+
+
+In recent multi-modal fusion literature we can discern two main types of techniques: early fusion and late fusion. 
+\paragraph{Early Fusion}
+Early fusion is the most widely used method. The principle is simple: we take both modal features and concatenate them into a single representation matrix. More formally, we consider two matrices  that represent different modality features each  over the same set of individuals. To perform early fusion we concatenate them column-wise, such that we form a new matrix having the same number of lines but increasing the number of columns to the sum of the number of columns of both matrices. The matrices may also be weighted as to control the influence of each modality.
+
+The main advantage of early fusion is that a single unique model is fitted while leveraging the correlations among the concatenated features. The method is also easy to integrate into an analysis system. The main drawback is that we increase the representation space and may make it harder to fit models over it.
 %
-The advantages of late fusion include the combination of features at the same level of representation (either the fusion of decisions or similarity matrices). This makes the fusion process more straight-forward. Also, given that independent models are trained separately, we can chose which algorithm is more adequate for each type of
+
+%   of shape $(n, m + p)$. Following the literature notation of [vulic], the early fusion representation matrix EF is defined as:
+%\begin{equation}
+%EF = \alpha \times X_1 || (1 - \alpha) \times X_2
+%\end{equation}
+
+%where $||$ represents the column-wise concatenation operation and α is the parameter that determines the contribution of each modality. 
+%
+Early fusion has been employed in several multi-modal tasks. For example, [?]. 
+\paragraph{Late Fusion}
+In contrast to early fusion, in late fusion the combination of multimodal features are generally performed at the decision level, i.e., using the output of independent models trained  each with an unique set of features \cite{ClinchantAC11}. In this setting,  decisions produced by each model are combined into a single final result set.
+%
+The methods used to combine preliminary decisions usually involve one of two types: rule-based (where modalities are combined according to domain-specific knowledge) or linear fusion (e.g., weighting and then adding or multiplying both matrices together). This type of fusion is very close to the so-called ensemble methods in the machine learning literature, namely the stacking methods.
+%
+Late fusion combines both modalities in the same semantic space. In that sense,  we may also combine modalities via an affinity representation instead of final decision sets. In other words, we can combine two modality matrices by means of their respective similarities. A final representation is then usually obtained by adding the weighted similarity matrices.
+%
+
+The advantages of late fusion include the combination of features at the same level of representation (either the fusion of decisions or similarity matrices). Also, given that independent models are trained separately, we can chose which algorithm is more adequate for each type of
 features.
+\paragraph{Cross-media Similarity Fusion}
 
-In Table [] we show a synthetic table with the
-literature works on fusion cited in this section. We present the task solved by each contribution, the
-type of fusion used, the modalities involved and finally the performance gain obtained while using
-the fusion techniques.
 %
-\subsection{Cross-media similarity fusion}
-In [ahopine], cross-media similarity fusion is employed to propagate a single modal
-similarity into second modal similarity. Specifically, their procedure tries to bridge the semantic
-gap between textual and visual information by using the most similar objects in the textual similarity matrix as a proxy to transfer the information to the visual similarity matrix. In a general sense,
-having two similarity matrices $S_1$ and $S_2$ defined as above, we define the cross-media similarity fusion as:
+In \cite{Ah-PineCC15}, cross-media similarity fusion is defined and employed to propagate a single modality
+similarity into a second modality similarity matrix. Specifically, the procedure tries to bridge the semantic
+gap between textual and visual information by using the most similar objects in the textual similarity matrix as a proxy to transfer the information to the visual similarity matrix. In this paper we also experiment with this type of fusion.
 
+\paragraph{Hybrid Fusion}
+We may leverage the advantages of the previous two types of fusion techniques by combining them once more in a hybrid setting. As described in \cite{AtreyHEK10,yu2014informedia}, the main idea is to simultaneously combine features at the feature level, i.e., early fusion, and at the same semantic space or decision level. Nonetheless, they define a specific type of hybrid fusion. In this paper, we adopt a looser definition of hybrid fusion. That is, we perform hybrid fusion by leveraging the combination of the fusion strategies described before.
+%In a general sense,
+%having two similarity matrices $S_1$ and $S_2$ defined as above, we define the cross-media similarity fusion as:
+%
+%\begin{equation}
+%XF = \mathbf{K}(S_1, k) \cdot S_2
+%\end{equation}
+%
+%where $\mathbf{K}$ is a row-wise function that keeps only the top-k values of the similarity matrix S 1 and
+%assigns zero to the rest of the line.
+
+%In Table [] we show a synthetic table with the literature works on fusion cited in this section. We present the task solved by each contribution, the type of fusion used, the modalities involved and finally the performance gain obtained while using the fusion techniques.
+
+%\subsection{NER and WSI/WSD}
+%Previously we introduced NLP works that made use of a fusion strategy to improve a single modality system. Nonetheless, and to the best of our knowledge, there is no work that addresses NER directly while using fusion techniques from the multimedia analysis domain.
+
+
+In the following section we present the core of the work presented in this paper. We consider the first three types of fusion techniques (early fusion, late fusion and cross-media fusion) as the building blocks to the experiments we conduct.  While we work with a single modality, i.e., textual data, we consider the different kinds of features extracted from it as distinct modalities. Our intuition being that the semantic similarities among words in these different spaces can be combined in order to exploit the latent complementarity between the lexical and syntactical representations. The fusion should therefore improve the performance of the NLP tasks at hand, NER and WSI/WSD.
+
+Our first goal is to assess the effectiveness of the classic fusion methods and then, as a second goal, to propose new combinations that yield better outcomes in terms of performance than the simpler approaches. The new combinations are found empirically. Nonetheless, as we will show, their effectiveness replicates within different datasets and NLP tasks. This kind of fusion combinations is somewhat similar to previously employed approaches which join early fusion with cross-media fusion operators to construct random-walk based fusion methods \cite{Ah-PineCC15,GialampoukidisM16}. These techniques iterate over the fusion operators several times in the hopes of better propagating useful information across modalities. Still, we do not perform any kind of iteration. Our approaches perform a single step to obtain a representation matrix.
+
+In the following section we formally describe the fusion techniques described before, which we employ in the next section. Also, we also delineate the procedure followed in our experiments. 
+
+\begin{figure*}
+\centering
+\includegraphics[width=0.85\linewidth]{img/diag_metodo}
+\caption{}
+\label{fig:diagmetodo}
+\end{figure*}
+
+The experiments we carry on consist in generating matrices that will serve as input to a learning algorithm in order to solve NER and WSI/WSD. These input feature matrices are be based upon lexical, syntactical, or other types of representation. 
+
+\subsection{Fusion Strategies}
+We begin by presenting a  formal definition of the fusion techniques employed and described in the previous sections. We define early fusion, late fusion and cross-media fusion as follows:
+\paragraph{Early Fusion}
 \begin{equation}
-XF = \mathbf{K}(S_1, k) \cdot S_2
+E_\alpha(A,B) = \mathbf{hstack}(\alpha\cdot A , (1-\alpha)\cdot B)
+\end{equation}
+\paragraph{Late Fusion}
+\begin{equation}
+L_\beta(A,B) = \beta \cdot A + (1 - \beta)\cdot B
+\end{equation}
+\paragraph{Cross-media Fusion}
+\begin{equation}
+X_{\gamma}(A,B) = \mathbf{K}(A,\gamma) \times B
 \end{equation}
 
-where $\mathbf{K}$ is a row-wise function that keeps only the top-k values of the similarity matrix S 1 and
-assigns zero to the rest of the line.
+%\vspace{.3cm}
+
+Parameters $A$ and $B$ are input matrices. They may initially represent, for example,  the lexical ($M^{LEX}$) or syntactical based ($M^{SYN}$) features matrix, or their  corresponding similarity matrices, $S^{LEX}$ and  $S^{SYN}$, ~respectively. In a broader sense, matrices $A$ and $B$ may represent any pair of valid\footnote{Valid in terms of having compatible shapes while computing a matrix sum or multiplication.} fusion matrices. 
+
+In early fusion, $E_\alpha(A,B)$, the matrices $A$ and $B$ are combined together via a concatenation function $\mathbf{hstack}$ which joins both of them column-wise. The $\alpha$ parameter controls the importance of each matrix.
+
+Regarding late fusion $L_\beta(A,B)$, the  $\beta$ parameter determines again the importance of the  matrix $A$,  and consequently also the relevance of matrix $B$.
+
+In cross late fusion $X_\gamma(A,B)$, the $\mathbf{K}(\cdot)$ function keeps the top-$\gamma$ closest words (columns) to each word (lines) while the rest of the values are set to zero.
+
+Using the previously defined operators, we carry out four levels of experiments: 
+\begin{enumerate}
+\item \textbf{Independent Features}: in this phase we consider the modalities independently as input to the learning methods. For instance, we may train a model for NER using only the lexical features matrix $M^{LEX}$.
+\item \textbf{First-degree Fusion}: we  consider the most three elementary fusion techniques by themselves (early fusion, late fusion, cross-media fusion) without any recombination.  These experiments, as well as those from the previous level, serve as the baselines we set to surpass in order to show the efficacy of the rest of the fusion approaches.
+As an example, we may obtain a representation matrix by performing an early fusion between the lexical matrix and the syntactical features matrix: $E(M^{LEX}, M^{SYN})$.
+\item \textbf{Second-degree Fusion}: here we recombine the outputs of the previous two levels with the elementary techniques. This procedure then yields a recombination of "second-degree" among fusion methods. A second-degree fusion would be an early fusion of the lexical feature matrix with a cross-media fusion, expressed as $E(M^{LEX}, X(S^{STD}, M^{STD}))$.   
+\item \textbf{N-degree Fusion}: in this last level we follow a similar approach to the previous level by coombining the output of the second-degree fusion level multiple times with other second-degree fusion outputs. As an example, the equation $E(L(M^{STD}, X(S^{STD}, M^{STD})), \allowbreak L(M^{LEX}, X(S^{SYN}, M^{LEX})))$  denotes the early fusion between two operations: (1) a late fusion between a lexical-features matrix and a cross-media fusion, and (2),  another late fusion consisting of a standard-features matrix (this matrix is detailed below)  and a cross-media fusion. In general, we determine a n-degree fusion empirically. That is to say, we look at the performance of second-degree fusions and try to improve the performance of the systems by recombining the fusion outputs via a n-degree combination. This process is in fact applied during the second-degree fusions also. 
+\end{enumerate}   
+\subsection{Feature Matrices}
+In the previous subsection we presented the fusion operators used in our experiments. Below we detail the three types of features used to describe the words of the corpus tested.
+\paragraph{Lexical Matrix (LEX)}
+For each token in the corpus, we use a lexical window of two words to the left and two words to the right, plus the token itself. Specifically, for a target word $w$, its lexical context is $(w_{-2}, w_{-2}, w, w_{+1}, w_{+2})$. This type of context features is typical for any system studying the sourroundings of a word, i.e., using a distributional approach.
+% We retake the example phrase from \cite{LevyG14}, the lexical-based features of the phrase \textit{Australian scientist discovers start with telescope}, are shown in Table \ref{tab:lex-contexts}.
+%\begin{table*}[ht]
+%\centering
+%\begin{tabular}{ll}
+%\hline 
+% \textbf{Word} & \textbf{Features} \\ 
+%\hline 
+%Australian & word:Australian, word+1:scientist, word+2:discovers\\ 
+%scientist  &  word-1:Australian, word:scientist, word+1:discovers, word+2:star\\ 
+%discovers & word-2:Australian, word-1:scientist, $\dots$, word+2:telescope \\ 
+%star & word-2:scientist, word-1:discovers, word:star, $\dots$, word+2:telescope \\ 
+%with & word-2:discovers, word-1:star, word:with, word+1:telescope \\ 
+%telescope  &  word-2:star, word-1:with, word:telescope \\ 
+%\hline \
+%\end{tabular} 
+%\label{tab:lex-contexts}
+%\caption{Lexical features corresponding to the phrase \textit{Australian scientist discovers start with telescope}.}
+%\end{table*} 
+
+\paragraph{Syntactical Matrix (SYN)}
+Based on the syntactic features used in   \cite{LevyG14,Panchenko2017}, we derive contexts based on the syntactic relations a word participates in, as well as including the part of speech (PoS) of the arguments of these relations. Formally, for a word $w$ with modifiers $m_1, \dots, m_k$ and their corresponding PoS tags $p^m_1, \dots, p^m_k$; a head $h$ and its corresponding PoS tag $p^h$, we consider the context features $(m_1, p_{m_1}, lbl_1), \dots, (m_k, p_{m_k}, lbl_k), \allowbreak (h,p_h,lbl\_inv_h)$. In this case, $lbl$ and $lbl_inv$ indicate the label of the dependency relation and its inverse, correspondingly. Using syntactic dependencies as features should yield more specific similarities, closer to synonymy, instead of the broader topical similarity found through lexical contexts.
+%For the phrase \textit{Australian scientist discovers start with telescope} the dependency-based context is shown in Table \ref{tab:syn-contexts}.
+\paragraph{NER Standard Features Matrix (STD)}
+
+The features used for NER are based roughly the same as those used for the same task in \cite{Daume2006,Balasuriya2009}. The feature set consists of: the word itself, whether the word begins with capital letter, prefix and suffix up to three characters (within a window of two words to the left and two words to the right), and the PoS tag of the current word. These features are considered to be standard in the literature. We note that the matrix generated with these features is exclusively used in the experiments regarding NER.	
+
+\subsection{Learning Methods}
+Both tasks, NER and WSI/WSD, are
+We use supervised and unsupervised learning methods for NER and WSI/WSD respectively. On the one hand, for NER, as supervised algorithm, we use an averaged structured perceptron \cite{Collins2002,Daume2006} to determine the tags of the named entities. We considered Logistic Regression and linear SVM. We chose the perceptron because of its performance and the lower training time.
+
+On the other hand, for WSD/WSI, specifically for the induction part, we applied spectral clustering, as in  \cite{GoyalH14}, on the input matrices in order to automatically discover senses (a cluster is considered a sense). Regarding disambiguation, we trivially assign senses to the target word instances according to the number of common words in each cluster and the context words of the target word. In other words, for each test instance of a target word, we select the cluster (sense) with the maximum number of shared words with the current instance context.
+
+
+%\begin{table*}
+%\centering
+%\begin{tabular}{ll}
+%\hline 
+% Word & Contexts \\ 
+%\hline 
+%Australian & scientist/NN/amod\_inv \\ 
+%scientist  &  Australian/JJ/amod, discovers/VBZ/nsubj\_inv\\ 
+%discovers & scientist/NN/nsubj, star/NN/dobj, telescope/NN/nmod:with \\ 
+%star & discovers/VBZ/dobj\_inv \\ 
+%telescope  &  discovers/VBZ/nmod:with\_inv \\ 
+%\hline \
+%\end{tabular} 
+%\label{tab:syn-contexts}
+%\caption{Syntactic contexts corresponding to the phrase \textit{Australian scientist discovers start with telescope}.}
+%\end{table*}
+
+
+
+
+\section{Experiments and Evaluation}
+
+
+We experiment with four levels of fusion: Independent Features (IF), First-degree Fusion (1F), Second-degree Fusion (2F) and N-degree Fusion (NF). The representation matrices for NER come from lexical context features $M^{LEX}$, syntactical context features $M^{SYN}$ or standard features $M^{STD}$.  Experiments concerning WSI/WSD exclusively employ matrices $M^{LEX}$ and $M^{SYN}$.
 
 \subsection{Named Entity Recognition}
-Previously we introduced NLP works that made use of a fusion strategy to improve a single modality system. Nonetheless, and to the best of our knowledge, there is no work that addresses NER directly while using fusion techniques from the
-multimedia analysis domain.
 
-\section{Methodology}
-Recall that in this paper we work with three different types of linguistic data extracted directly from
-the text: lexical co-occurrences (LEX), syntactic information (SYN) and constituents tree member-
-ship (CONS). As a starting point baseline, we test each of these features independently by training
-models on each feature matrix separately. Afterwards, we combine the information using four dif-
-ferent fusion configurations: we test Early Fusion (EF), Late Fusion, Cross Early Fusion (XEF) and
-Cross Late Fusion (XLF). We define these fusion settings below. Notice that in Table 2 we present
-the notation and definitions employed. In each of the following definitions, the result of the opera-
-tions is used as input to a Logistic Regression (L1 regularization) to train a model able to predict tags
-on a test set. 
-% include your own bib file like this:
-%\bibliographystyle{acl}
-%\bibliography{acl2015}
+\paragraph{Pre-processing}
 
-\subsection*{Early Fusion}
-$$
-E_\alpha(A,B) = hstack(\alpha * A , (1-\alpha)*B)
-$$
-\subsection*{Late Fusion}
-$$
-L_\beta(A,B) = \beta * A + (1 - \beta) * B
-$$
-\subsection*{Cross  Fusion}
-$$
-X_{\gamma}(A,B) = \mathbf{K}(A,\gamma) \cdot B
-$$
-\vspace{.5cm}
-\section{Experimental Setup}
-\paragraph{Task: Named Entity Recognition}
+As is usual when preprocessing text before performing named entity recongition, \cite{RatinovR09}, we normalize tokens that include numbers. For example, the token 1980 becomes *DDDD* and 212-325-4751 becomes *DDD*-*DDD*-*DDDD* . This allows a degree of abstraction to tokens that contain years, phone
+numbers, etc.
+
 Given a word, the goal is to determine what kind of entity, if any, it represents. We use the classic BIO (Beginning, Inside, Outside) tagset for the classic four entities Location, Person, Organization and Miscelaneus. Performance is measured using phrase-level Precision, Recall and F-measure as in the CoNLL-2003 NER task.
+\paragraph{Features}
+The linguistic information we use is extracted with Stanford’s CoreNLP parser.
+
 \paragraph{Test Datasets}We work with three corpus coming from different domains:
 \begin{itemize}
 \item [(1)] CoNLL-2003: This dataset was used in the language-independent named entity recognition CoNLL-2003 shared task. It is one of the most classic NER datasets and it is generally used to asses the performance of NER systems. Contains selected news-wire articles from the Reuters Corpus. Each article is annotated manually. It is divided in three parts,  training (\textit{train}) and two testing sets (\textit{testa} and \textit{testb}). The training part contains 219,554 lines, while the test sets contain 55,044 and 50,350 lines, respectively. The task was evaluated on the \textit{testb} file, as in the original task.
@@ -159,51 +278,19 @@ Given a word, the goal is to determine what kind of entity, if any, it represent
 
 \end{itemize}
 
-\begin{table*}[ht]
-\centering
-\begin{tabular}{cl}
-\hline 
- Word & Contexts \\ 
-\hline 
-Australian & word:Australian, word+1:scientist, word+2:discovers\\ 
-scientist  &  word-1:Australian, word:scientist, word+1:discovers, word+2:star\\ 
-discovers & word-2:Australian, word-1:scientist, $\dots$, word+2:telescope \\ 
-star & word-2:scientist, word-1:discovers, word:star, $\dots$, word+2:telescope \\ 
-with & word-2:discovers, word-1:star, word:with, word+1:telescope \\ 
-telescope  &  word-2:star, word-1:with, word:telescope \\ 
-\hline \
-\end{tabular} 
-\label{tab:lex-contexts}
-\caption{Lexical contexts corresponding to the phrase \textit{Australian scientist discovers start with telescope}.}
-\end{table*} 
-\paragraph{Pre-processing}
-As is usual when preprocessing text before performing named entity recongition, \cite{RatinovR09}, we normalize tokens that include numbers. For example, the token 1980 becomes *DDDD* and 212-325-4751 becomes *DDD*-*DDD*-*DDDD* . This allows a degree of abstraction to tokens that contain years, phone
-numbers, etc.
-\paragraph{Building the data matrices}
-The linguistic information we use is extracted with Stanford’s CoreNLP parser.
-Let $x = (x_1, \dots , x_N )$ be an input phrase.
-\paragraph{Lexical Matrix (LEX)}
-For each token in the corpus, we use a lexical window of two words to the left and two words to the right, plus the token itself. Specifically, for a target word $w$, its lexical context is $(w_{-2}, w_{-2}, w, w_{+1}, w_{+2})$.  For the phrase \textit{Australian scientist discovers start with telescope}, its lexical-based contexts are shown in Table \ref{tab:lex-contexts}.
-\vspace{.6cm}
 
-\paragraph{Syntactical Matrix (SYN)}
-Based on the syntactic features used in   \cite{LevyG14,Panchenko2017}, we derive contexts based on the syntactic relations a word participates in, as well on the Part of Speech (PoS)   .  That is, for a word $w$ with modifiers $m_1, \dots, m_k$ and their corresponding  tags $PoS_{m_1}, \dots, m_k$  and a head $h$ with , we consider the contexts $(m_1, lbl_1). \dots, (m_k, lbl_k), (h, lbl\_inv_h)$ as well . For the phrase \textit{Australian scientist discovers start with telescope} the dependency-based context is shown in Table \ref{tab:syn-contexts}.
-\begin{table*}
-\begin{tabular}{cl}
-\hline 
- Word & Contexts \\ 
-\hline 
-Australian & scientist/amod\_inv \\ 
-scientist  &  Australian/amod, discovers/nsubj\_inv\\ 
-discovers & scientist/nsubj, star/dobj, telescope/nmod:with \\ 
-star & discovers/dobj\_inv \\ 
-telescope  &  discovers/nmod:with\_inv \\ 
-\hline \
-\end{tabular} 
-\label{tab:syn-contexts}
-\caption{Syntactic contexts corresponding to the phrase \textit{Australian scientist discovers start with telescope}.}
-\end{table*}
-\vspace{.6cm}
+\subsection{Word Sense Induction and Disambiguation}
+\paragraph{Features}
+\paragraph{Test Dataset}
+\paragraph{Pre-processing}
+\paragraph{Results}
+\include{conll_tables}
+\include{wikiner_tables}
+\include{wikigold_tables}
+\subsection{Word Sense Induction and Disambiguation}
+\include{semeval2007}
+\section{Conclusion and Future Work}
+
 
 % include your own bib file like this:
 \bibliographystyle{acl}

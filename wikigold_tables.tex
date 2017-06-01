@@ -1,0 +1,121 @@
+\begin{table*}[]
+\centering
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Method} & \textbf{ALL\_F} & \textbf{ALL\_P} & \textbf{ALL\_R}\\ \midrule
+$M^{STD}$                    & 59.66 & 59.82 & 59.50  \\ 
+$M^{LEX}$                    & 52.34 & 68.42 & 42.38 \\
+$M^{SYN}$                    & 25.49 & 36.55 & 19.56 \\
+                             &       &       &       \\
+$E(M^{LEX}, M^{SYN})$        & 59.38 & 67.50  & 53.01 \\
+$E(M^{LEX}, M^{STD})$        & 61.96 & 62.38 & 68.10 \\
+%                            &       &       &       \\
+$E(M^{SYN}, M^{STD})$        & 60.93 & 61.33 & 60.54 \\
+%                            &       &       &       \\
+                             &       &       &       \\
+$L_{0.5}(S^{LEX}, S^{SYN})$  & 44.29 & 52.07 & 38.53 \\
+$L_{0.5}(S^{LEX}, S^{STD})$  & 48.00   & 51.88 & 44.66 \\
+$L_{0.5}(S^{SYN}, S^{STD})$  & 49.81 & 54.33 & 45.98 \\ \bottomrule
+\end{tabular} 
+\caption{Wikigold Dataset Results. The results reported come from a 5-folds CV.}
+\label{tab:wikigold}
+\end{table*}
+
+
+
+
+
+\begin{table*}[]
+\centering
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Method} & \textbf{ALL\_F} & \textbf{ALL\_P} & \textbf{ALL\_R} \\ \midrule
+$X_5(S^{LEX}, S^{SYN})$      & 36.63           & 45.25           & 30.78           \\
+$X_5(S^{LEX}, S^{STD})$  & 38.35           & 45.79            & 33.00     \\ 
+$X_5(S^{LEX}, M^{LEX})$  & 45.21           & 56.41            & 37.72           \\ 
+$X_5(S^{LEX}, M^{SYN})$  & 37.47           & 47.70            & 30.86           \\ 
+$X_5(S^{LEX}, M^{STD})$* & 52.69           & 57.34            & 48.74           \\  
+%
+                             &       &       &       \\
+$X_{20}(S^{SYN}, S^{LEX})$     & 38.27          & 45.49           & 33.02           \\
+$X_{10}(S^{SYN}, S^{STD})$  & 39.62           & 43.63            & 36.28     \\ 
+$X_5(S^{SYN}, M^{LEX})$ &  45.09          & 52.83            & 39.32          \\ 
+$X_5(S^{SYN}, M^{SYN})$  & 28.57           & 37.49            & 23.07           \\ 
+$X_5(S^{SYN}, M^{STD})$*  & 48.53           & 51.77            & 45.67           \\  
+%
+                             &       &       &       \\
+$X_5(S^{STD}, S^{LEX})$      & 40.51           & 45.59           & 36.45           \\
+$X_5(S^{STD}, S^{SYN})$  &41.12				&44.63						&38.11   \\ 
+$X_5(S^{STD}, M^{LEX})$  & 45.21           & 56.41            & 37.72           \\ 
+$X_{10}(S^{STD}, M^{SYN})$  & 41.89           & 48.84            & 36.57           \\ 
+$X_5(S^{STD}, M^{STD})$*  &50.15	&52.57	&47.95            \\  \bottomrule
+%
+%
+
+\end{tabular}
+\caption{Wikigold Dataset Results. The results reported come from a 5-folds CV.}
+\label{tab:wikigold}
+\end{table*}
+% % % % % % % % %
+\begin{table*}[]
+\centering
+\begin{tabular}{@{\makebox[2.5em][l]{\rownumber\space}}llll@{}}
+\toprule
+\textbf{Method} & \textbf{ALL\_F} & \textbf{ALL\_P} & \textbf{ALL\_R} \\ \midrule
+
+%
+$X(X(S^{STD}, S^{SYN}), M^{STD})$  & 41.71           & 45.54           & 38.48\\ 
+$X(X(S^{STD}, S^{SYN}), M^{LEX})$  & 41.56          & 47.37           & 37.02\\ 
+$X(X(S^{STD}, S^{SYN}), M^{SYN})$  & 34.91           & 41.43           & 30.16 \\ 
+\midrule
+%
+$X(X(S^{STD}, S^{SYN}), S^{STD})$  & 37.08           & 39.88           & 34.65\\ 
+$X(X(S^{STD}, S^{SYN}), S^{LEX})$  & 38.35          & 41.89           & 35.36\\ 
+$X(X(S^{STD}, S^{SYN}), S^{SYN})$  & 32.63           & 35.32           & 30.33 \\ 
+\midrule
+$E(M^{LEX}, X(S^{SYN}, M^{LEX}))$      & 53.54	&	62.01	&	47.11           \\
+$E(M^{SYN}, X(S^{SYN}, M^{LEX}))$      & 45.33	&	51.43	&	40.53           \\ 
+$E(M^{STD}, X(S^{SYN}, M^{LEX}))$      & 61.69	&	62.74	&	60.68			\\
+\midrule
+$E(M^{LEX}, X(S^{STD}, M^{STD}))$      & 50.10	&	58.38	&	43.87           \\
+$E(M^{SYN}, X(S^{STD}, M^{STD}))$      & 42.77	&	50.13	&	37.3           \\ 
+$E(M^{STD}, X(S^{STD}, M^{STD}))$      & 60.13	&	61.49	&	58.83           \\
+\midrule
+$E(M^{LEX}, X(S^{SYN}, M^{STD}))$      & 50.77	&	54.34	&	47.64           \\
+$E(M^{SYN}, X(S^{SYN}, M^{STD}))$      & 48.31	&	51.85	&	45.22          \\ 
+\gdef\rownumber{\circlednumber{\stepcounter{magicrownumbers}\arabic{magicrownumbers}}}%
+$E(M^{STD}, X(S^{SYN}, M^{STD}))$      & 56.30	&	57.21	&	55.42           \\
+
+\midrule
+%
+$L(M^{STD}, X(S^{STD}, M^{STD}))$      & 55.08           & 57.29          & 53.04           \\ 
+$L(M^{STD}, X(S^{SYN}, M^{STD}))$      & 54.73           & 57.10          & 52.56           \\ 
+$L(M^{LEX}, X(S^{SYN}, M^{LEX}))$      & 52.39           & 59.81           & 46.6	           \\  
+\midrule
+%
+$E(\circlednumber{1}, \circlednumber{2})$      & 58.17          & 59.66           & 56.75	          \\ \midrule
+%
+$E(M^{STD}, \circlednumber{1})$      & 58.73          & 59.83     & 57.67	  \\
+$E(M^{STD}, \circlednumber{2})$      & 59.51          & 60.19  & 58.85	  \\
+$E(M^{STD}, \circlednumber{3})$      & 62.37          & 63.03  & 61.72	  \\
+\midrule
+
+%
+$E(M^{LEX}, E(\circlednumber{7}, \circlednumber{3})$       & 64.66          & 65.05           & 61.05         \\
+$E_{0.95}(M^{LEX}, E(\circlednumber{7}, \circlednumber{3})$     & 67.29          & 69.86           & 64.90         \\
+
+%$E(M^{STD}, L(M^{STD}, X(S^{STD}, M^{STD})))$      & 58.73          & 59.83     & 57.67	  \\
+%$E(M^{STD}, L(M^{LEX}, X(S^{SYN}, M^{LEX})))$      & 62.37          & 63.03  & 61.72	  \\
+%$E(M^{STD}, L(M^{STD}, X(S^{SYN}, M^{STD})))$      & 59.51          & 60.19  & 58.85	  \\
+%\midrule
+%%
+%$E(M^{LEX}, E(E(M^{STD}, L(M^{LEX}, X(S^{SYN}, M^{LEX}))), L(M^{LEX}, X(S^{SYN}, M^{LEX}))))$       & 64.66          & 65.05           & 61.05         \\
+%$E_{0.95}(M^{LEX}, E(E(M^{STD}, L(M^{LEX}, X(S^{SYN}, M^{LEX}))), L(M^{LEX}, X(S^{SYN}, M^{LEX}))))$       & 67.29          & 69.86           & 64.90         \\
+
+
+\bottomrule
+\end{tabular}
+\caption{Wikigold Dataset Results. The results reported come from a 5-folds CV.}
+\label{tab:wikigold}
+\end{table*}
+

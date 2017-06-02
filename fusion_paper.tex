@@ -191,7 +191,7 @@ In cross late fusion $X_\gamma(A,B)$, the $\mathbf{K}(\cdot)$ function keeps the
 
 Using the previously defined operators, we carry out four levels of experiments: 
 \begin{enumerate}
-\item \textbf{Independent Features}: in this phase we consider the modalities independently as input to the learning methods. For instance, we may train a model for NER using only the lexical features matrix $M^{LEX}$.
+\item \textbf{Single Features}: in this phase we consider the modalities independently as input to the learning methods. For instance, we may train a model for NER using only the lexical features matrix $M^{LEX}$.
 \item \textbf{First-degree Fusion}: we  consider the most three elementary fusion techniques by themselves (early fusion, late fusion, cross-media fusion) without any recombination.  These experiments, as well as those from the previous level, serve as the baselines we set to surpass in order to show the efficacy of the rest of the fusion approaches.
 As an example, we may obtain a representation matrix by performing an early fusion between the lexical matrix and the syntactical features matrix: $E(M^{LEX}, M^{SYN})$.
 \item \textbf{Second-degree Fusion}: here we recombine the outputs of the previous two levels with the elementary techniques. This procedure then yields a recombination of "second-degree" among fusion methods. A second-degree fusion would be an early fusion of the lexical feature matrix with a cross-media fusion, expressed as $E(M^{LEX}, X(S^{STD}, M^{STD}))$.   
@@ -257,7 +257,7 @@ On the other hand, for WSD/WSI, specifically for the induction part, we applied 
 \section{Experiments and Evaluation}
 
 
-We experiment with four levels of fusion: Independent Features (IF), First-degree Fusion (1F), Second-degree Fusion (2F) and N-degree Fusion (NF). The representation matrices for NER come from lexical context features $M^{LEX}$, syntactical context features $M^{SYN}$ or standard features $M^{STD}$.  Experiments concerning WSI/WSD exclusively employ matrices $M^{LEX}$ and $M^{SYN}$.
+We experiment with four levels of fusion: Single Features (SF), First-degree Fusion (1F), Second-degree Fusion (2F) and N-degree Fusion (NF). The representation matrices for NER come from lexical context features $M^{LEX}$, syntactical context features $M^{SYN}$ or standard features $M^{STD}$.  Experiments concerning WSI/WSD exclusively employ matrices $M^{LEX}$ and $M^{SYN}$.
 
 \subsection{Named Entity Recognition}
 
@@ -284,7 +284,7 @@ The linguistic information we use is extracted with Stanford’s CoreNLP parser.
 \paragraph{Test Dataset}
 \paragraph{Pre-processing}
 \paragraph{Results}
-\include{conll_tables}
+y\include{conll_tables}
 \include{wikiner_tables}
 \include{wikigold_tables}
 \subsection{Word Sense Induction and Disambiguation}

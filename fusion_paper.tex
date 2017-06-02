@@ -26,7 +26,7 @@
 \preto\tabular{\setcounter{magicrownumbers}{0}}
 %\newcommand{\circlednumber}[1]{\raisebox{.5pt}{\textcircled{\raisebox{-.9pt} {#1}}}}
 \newcommand*\circlednumber[1]{\tikz[baseline=(char.base)]{
-    \node[shape=circle,draw,inner sep=1pt, minimum size=1pt] (char) {#1};}}
+    \node[shape=circle,draw,inner sep=1pt, minimum size=1pt] (char) {\footnotesize{#1}};}}
 \newcounter{magicrownumbers}
 \def\rownumber{}
 %\setlength\titlebox{5cm}

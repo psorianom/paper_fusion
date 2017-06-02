@@ -1,26 +1,28 @@
 \begin{table}[]
 \centering
-\begin{tabular}{@{}llll@{}}
+\setlength\tabcolsep{2.75pt}
+\begin{tabular}{@{\makebox[1.50em][l]{\rownumber\space}}lccc@{}}
 \toprule
-\textbf{Method} & \textbf{ALL\_F} & \textbf{ALL\_P} & \textbf{ALL\_R}\\ \midrule
+\textbf{Method} & \textbf{F} & \textbf{P} & \textbf{R}\\ \midrule
 $M^{STD}$                    & 77.41 & 77.39 & 77.42  \\ 
 $M^{LEX}$                    & 69.40 & 80.73 & 60.86 \\
+\gdef\rownumber{\circlednumber{\stepcounter{magicrownumbers}\arabic{magicrownumbers}}}%
 $M^{SYN}$                    & 32.95 & 53.79 & 23.75 \\ 
 \midrule
 %                             &       &       &       \\
 %$E(M^{LEX}, M^{SYN})$        & 72.01 & 79.40  & 65.86 \\
 $E(M^{LEX}, M^{STD})$        & 78.13 & 78.24 & 78.03 \\
 %$E(M^{SYN}, M^{STD})$        & 77.70 & 77.55 & 77.85 \\
-\midrule
+%\midrule
 %                             &       &       &       \\
 $L_{0.5}(S^{LEX}, S^{SYN})$  & 61.65 & 70.45 & 54.81 \\
 %$L_{0.5}(S^{LEX}, S^{STD})$  & 55.64   & 67.32 & 47.42 \\
 %$L_{0.5}(S^{SYN}, S^{STD})$  & 50.21 & 56.43 & 45.23 \\ 
-\midrule
+%\midrule	
 %                             &       &       &       \\
 %$X_5(S^{LEX}, S^{SYN})$      & 26.15           & 22.29           & 31.64           \\
 %$X_5(S^{LEX}, S^{STD})$*  & 27.75         & 23.71            & 33.46     \\ 
-%$X_5(S^{LEX}, M^{LEX})$  & 49.90           & 52.48            & 47.56           \\ 
+$X_5(S^{LEX}, M^{LEX})$  & 49.90           & 52.48            & 47.56           \\ 
 %$X_5(S^{LEX}, M^{SYN})$  & 36.69           & 38.91            & 34.70           \\ 
 %$X_5(S^{LEX}, M^{STD})$* & 47.97           & 52.77            & 43.96           \\  
 %
@@ -32,22 +34,22 @@ $X_5(S^{SYN}, M^{LEX})$ &  42.40          & 47.37            & 38.37          \\
 %$X_5(S^{SYN}, M^{STD})$  & 47.27           & 46.81            & 47.74           \\  
 %
 %                             &       &       &       \\
-%$X_5(S^{STD}, S^{LEX})$      & 39.92           & 37.97           & 42.08           \\
+$X_5(S^{STD}, S^{LEX})$      & 39.92           & 37.97           & 42.08           \\
 %$X_5(S^{STD}, S^{SYN})$  &27.87				&23.53						&34.17    \\ 
 $X_5(S^{STD}, M^{LEX})$  & 52.89           & 54.38            & 51.48           \\ 
 %$X_{10}(S^{STD}, M^{SYN})$  & 40.39           & 42.21            & 38.71           \\ 
 $X_5(S^{STD}, M^{STD})$  &51.14	&53.42	&49.04            \\  \bottomrule
-\end{tabular}
-\caption{CoNLL-2003 Dataset Results. The results reported come from a 5-folds CV.}
-\label{tab:wikigold}
-\end{table}
+%\end{tabular}
+%\caption{CoNLL-2003 Dataset Results. The results reported come from a 5-folds CV.}
+%\label{tab:wikigold}
+%\end{table}
 
-\begin{table}[]
-\centering
-\begin{tabular}{@{\makebox[1.25em][l]{\rownumber\space}}llll@{}}
-\toprule
- 
-\textbf{Method} & \textbf{ALL\_F} & \textbf{ALL\_P} & \textbf{ALL\_R} \\ \midrule
+%\begin{table}[]
+%\centering
+%\begin{tabular}{@{\makebox[1.25em][l]{\rownumber\space}}llll@{}}
+%\toprule
+% 
+%\textbf{Method} & \textbf{ALL\_F} & \textbf{ALL\_P} & \textbf{ALL\_R} \\ \midrule
 
 %
 %$X(X(S^{STD}, S^{SYN}), M^{STD})$  & 26.71           & 36.53           & 21.05\\ 
@@ -59,10 +61,10 @@ $X_5(S^{STD}, M^{STD})$  &51.14	&53.42	&49.04            \\  \bottomrule
 %$X(X(S^{STD}, S^{SYN}), S^{LEX})$  & 23.80          & 26.20           & 21.79\\ 
 %$X(X(S^{STD}, S^{SYN}), S^{SYN})$  & 17.09           & 14.34           & 21.15 \\ 
 %\midrule
-$X(X(S^{STD}, S^{LEX}), M^{STD})$  & 37.69           & 57.51           & 28.03\\ 
+$X(X(\circlednumber{5}, M^{STD})$  & 37.69           & 57.51           & 28.03\\ 
 %$X(X(S^{STD}, S^{LEX}), M^{LEX})$  & 38.31          & 49.99           & 31.05\\ 
 %$X(X(S^{STD}, S^{LEX}), M^{SYN})$  & 29.31           & 35.92           & 24.75 \\ 
-\midrule
+%\midrule
 %
 %$X(X(S^{STD}, S^{LEX}), S^{STD})$  & 25.18          & 22.00           & 29.43\\ 
 %$X(X(S^{STD}, S^{LEX}), S^{LEX})$  & 23.53         & 19.77           & 29.06\\ 
@@ -82,16 +84,16 @@ $X(X(S^{STD}, S^{LEX}), M^{STD})$  & 37.69           & 57.51           & 28.03\\
 %\midrule
 %$E(M^{LEX}, X(S^{LEX}, M^{LEX}))$      & 48.96	&	60.40	&	41.17           \\
 \gdef\rownumber{\circlednumber{\stepcounter{magicrownumbers}\arabic{magicrownumbers}}}%
-$E(M^{SYN}, X(S^{LEX}, M^{LEX}))$      & 51.53	&	55.23	&	48.29          \\ 
+$E(M^{SYN}, \circlednumber{3})$      & 51.53	&	55.23	&	48.29          \\ 
 %$E(M^{STD}, X(S^{LEX}, M^{LEX}))$      & 47.42	&	58.47	&	39.89           \\
 
-\midrule
+%\midrule
 %
 
 %$L(M^{STD}, X(S^{STD}, M^{STD}))$      & 54.82           & 53.56          & 56.14           \\ 
 %$L(M^{STD}, X(S^{SYN}, M^{STD}))$      & 51.98           & 55.55           & 48.84           \\  
-$L(M^{LEX}, X(S^{SYN}, M^{LEX}))$      & 55.08           & 57.29          & 53.04           \\ 
-$L(M^{LEX}, X(S^{STD}, M^{LEX}))$      & 56.53           & 56.86           & 56.20           \\  
+$L(M^{LEX}, \circlednumber{4})$      & 55.08           & 57.29          & 53.04           \\ 
+$L(M^{LEX}, \circlednumber{6})$      & 56.53           & 56.86           & 56.20           \\  
 %$L(M^{LEX}, X(S^{LEX}, M^{LEX}))$      & 52.39           & 59.81           & 46.6	           \\  
 \midrule
 
@@ -104,7 +106,7 @@ $L(M^{LEX}, X(S^{STD}, M^{LEX}))$      & 56.53           & 56.86           & 56.
 $E(M^{STD}, \circlednumber{2})$      & 67.16          & 66.76           & 67.56	          \\
 $E(M^{STD}, \circlednumber{3})$      & 63.52          & 60.28           & 67.13	          \\ 
 %$E(M^{STD}, L(M^{LEX}, X(S^{STD}, M^{LEX})))$      & 63.52          & 60.28           & 67.13	          \\
-\midrule
+%\midrule
 %
 %$E(M^{LEX}, E(E(M^{STD}, L(M^{LEX}, X(S^{SYN}, M^{LEX}))), L(M^{LEX}, X(S^{SYN}, M^{LEX}))))$       & 69.07          & 68.46           & 69.69         \\
 $E(M^{LEX}, E(\circlednumber{4}, \circlednumber{2})$       & 69.07          & 68.46           & 69.69         \\

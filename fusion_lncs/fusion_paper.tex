@@ -1,20 +1,3 @@
-%
-% File acl2015.tex
-%
-% Contact: car@ir.hit.edu.cn, gdzhou@suda.edu.cn
-%%
-%% Based on the style files for ACL-2014, which were, in turn,
-%% Based on the style files for ACL-2013, which were, in turn,
-%% Based on the style files for ACL-2012, which were, in turn,
-%% based on the style files for ACL-2011, which were, in turn, 
-%% based on the style files for ACL-2010, which were, in turn, 
-%% based on the style files for ACL-IJCNLP-2009, which were, in turn,
-%% based on the style files for EACL-2009 and IJCNLP-2008...
-
-%% Based on the style files for EACL 2006 by 
-%%e.agirre@ehu.es or Sergi.Balari@uab.es
-%% and that of ACL 08 by Joakim Nivre and Noah Smith
-
 \documentclass{llncs}
 %\usepackage{acl2015}
 \usepackage{times}
@@ -32,7 +15,12 @@
 \newcounter{magicrownumbers}
 \def\rownumber{}
 %\setlength\titlebox{5cm}
-
+\newcommand\mlex{M^{\scriptscriptstyle LEX}}
+\newcommand\msyn{M^{\scriptscriptstyle SYN}}
+\newcommand\mstd{M^{\scriptscriptstyle STD}}
+\newcommand\slex{S^{\scriptscriptstyle LEX}}
+\newcommand\ssyn{S^{\scriptscriptstyle SYN}}
+\newcommand\sstd{S^{\scriptscriptstyle STD}}
 % You can expand the titlebox if you need extra space
 % to show all the authors. Please do not make the titlebox
 % smaller than 5cm (the original size); we will check this
@@ -102,8 +90,8 @@ Multimodal fusion is a popular technique used in multimedia anlysis tasks. Forma
 
 
 In recent multi-modal fusion literature we can discern two main types of techniques: early fusion and late fusion. 
-\paragraph{Early Fusion}
-Early fusion is the most widely used method. The principle is simple: we take both modal features and concatenate them into a single representation matrix. More formally, we consider two matrices  that represent different modality features each  over the same set of individuals. To perform early fusion we concatenate them column-wise, such that we form a new matrix having the same number of lines but increasing the number of columns to the sum of the number of columns of both matrices. The matrices may also be weighted as to control the influence of each modality.
+\subsubsection{Early Fusion}
+This techique is the most widely used fusion method. The principle is simple: we take both modal features and concatenate them into a single representation matrix. More formally, we consider two matrices  that represent different modality features each  over the same set of individuals. To perform early fusion we concatenate them column-wise, such that we form a new matrix having the same number of lines but increasing the number of columns to the sum of the number of columns of both matrices. The matrices may also be weighted as to control the influence of each modality.
 
 The main advantage of early fusion is that a single unique model is fitted while leveraging the correlations among the concatenated features. The method is also easy to integrate into an analysis system. The main drawback is that we increase the representation space and may make it harder to fit models over it.
 %
@@ -126,14 +114,12 @@ Late fusion combines both modalities in the same semantic space. In that sense, 
 
 The advantages of late fusion include the combination of features at the same level of representation (either the fusion of decisions or similarity matrices). Also, given that independent models are trained separately, we can chose which algorithm is more adequate for each type of
 features.
-\paragraph{Cross-media Similarity Fusion}
-
+\subsubsection{Cross-media Similarity Fusion}
 %
-In \cite{Ah-PineCC15}, cross-media similarity fusion is defined and employed to propagate a single modality
-similarity into a second modality similarity matrix. Specifically, the procedure tries to bridge the semantic
+In \cite{Ah-PineCC15}, cross-media similarity fusion, or cross fusion,  is defined and employed to propagate a single modality similarity into a second modality similarity matrix. Specifically, the procedure tries to bridge the semantic
 gap between textual and visual information by using the most similar objects in the textual similarity matrix as a proxy to transfer the information to the visual similarity matrix. In this paper we also experiment with this type of fusion.
 
-\paragraph{Hybrid Fusion}
+\subsubsection{Hybrid Fusion}
 We may leverage the advantages of the previous two types of fusion techniques by combining them once more in a hybrid setting. As described in \cite{AtreyHEK10,yu2014informedia}, the main idea is to simultaneously combine features at the feature level, i.e., early fusion, and at the same semantic space or decision level. Nonetheless, they define a specific type of hybrid fusion. In this paper, we adopt a looser definition of hybrid fusion. That is, we perform hybrid fusion by leveraging the combination of the fusion strategies described before.
 %In a general sense,
 %having two similarity matrices $S_1$ and $S_2$ defined as above, we define the cross-media similarity fusion as:
@@ -151,9 +137,9 @@ We may leverage the advantages of the previous two types of fusion techniques by
 %Previously we introduced NLP works that made use of a fusion strategy to improve a single modality system. Nonetheless, and to the best of our knowledge, there is no work that addresses NER directly while using fusion techniques from the multimedia analysis domain.
 
 
-In the following section we present the core of the work presented in this paper. We consider the first three types of fusion techniques (early fusion, late fusion and cross-media fusion) as the building blocks to the experiments we conduct.  While we work with a single modality, i.e., textual data, we consider the different kinds of features extracted from it as distinct modalities. Our intuition being that the semantic similarities among words in these different spaces can be combined in order to exploit the latent complementarity between the lexical and syntactical representations. The fusion should therefore improve the performance of the NLP tasks at hand, NER and WSI/WSD.
+In the following section we present the core of the work presented in this paper. We consider the first three types of fusion techniques (early fusion, late fusion and cross fusion) as the building blocks to the experiments we conduct.  While we work with a single modality, i.e., textual data, we consider the different kinds of features extracted from it as distinct modalities. Our intuition being that the semantic similarities among words in these different spaces can be combined in order to exploit the latent complementarity between the lexical and syntactical representations. The fusion should therefore improve the performance of the NLP tasks at hand, NER and WSI/WSD.
 
-Our first goal is to assess the effectiveness of the classic fusion methods and then, as a second goal, to propose new combinations that yield better outcomes in terms of performance than the simpler approaches. The new combinations are found empirically. Nonetheless, as we will show, their effectiveness replicates within different datasets and NLP tasks. This kind of fusion combinations is somewhat similar to previously employed approaches which join early fusion with cross-media fusion operators to construct random-walk based fusion methods \cite{Ah-PineCC15,GialampoukidisM16}. These techniques iterate over the fusion operators several times in the hopes of better propagating useful information across modalities. Still, we do not perform any kind of iteration. Our approaches perform a single step to obtain a representation matrix.
+Our first goal is to assess the effectiveness of the classic fusion methods and then, as a second goal, to propose new combinations that yield better outcomes in terms of performance than the simpler approaches. The new combinations are found empirically. Nonetheless, as we will show, their effectiveness replicates within different datasets and NLP tasks. This kind of fusion combinations is somewhat similar to previously employed approaches which join early fusion with cross fusion operators to construct random-walk based fusion methods \cite{Ah-PineCC15,GialampoukidisM16}. These techniques iterate over the fusion operators several times in the hopes of better propagating useful information across modalities. Still, we do not perform any kind of iteration. Our approaches perform a single step to obtain a representation matrix.
 
 In the following section we formally describe the fusion techniques described before, which we employ in the next section. Also, we also delineate the procedure followed in our experiments. 
 
@@ -167,7 +153,7 @@ In the following section we formally describe the fusion techniques described be
 The experiments we carry on consist in generating matrices that will serve as input to a learning algorithm in order to solve NER and WSI/WSD. These input feature matrices are be based upon lexical, syntactical, or other types of representation. 
 
 \subsection{Fusion Strategies}
-We begin by presenting a  formal definition of the fusion techniques employed and described in the previous sections. We define early fusion, late fusion and cross-media fusion as follows:
+We begin by presenting a  formal definition of the fusion techniques employed and described in the previous sections. We define early fusion, late fusion and cross fusion as follows:
 \paragraph{Early Fusion}
 \begin{equation}
 E_\alpha(A,B) = \mathbf{hstack}(\alpha\cdot A , (1-\alpha)\cdot B)
@@ -176,7 +162,7 @@ E_\alpha(A,B) = \mathbf{hstack}(\alpha\cdot A , (1-\alpha)\cdot B)
 \begin{equation}
 L_\beta(A,B) = \beta \cdot A + (1 - \beta)\cdot B
 \end{equation}
-\paragraph{Cross-media Fusion}
+\paragraph{cross fusion}
 \begin{equation}
 X_{\gamma}(A,B) = \mathbf{K}(A,\gamma) \times B
 \end{equation}
@@ -194,14 +180,14 @@ In cross late fusion $X_\gamma(A,B)$, the $\mathbf{K}(\cdot)$ function keeps the
 Using the previously defined operators, we carry out four levels of experiments: 
 \begin{enumerate}
 \item \textbf{Single Features}: in this phase we consider the modalities independently as input to the learning methods. For instance, we may train a model for NER using only the lexical features matrix $M^{LEX}$.
-\item \textbf{First-degree Fusion}: we  consider the most three elementary fusion techniques by themselves (early fusion, late fusion, cross-media fusion) without any recombination.  These experiments, as well as those from the previous level, serve as the baselines we set to surpass in order to show the efficacy of the rest of the fusion approaches.
+\item \textbf{First-degree Fusion}: we  consider the most three elementary fusion techniques by themselves (early fusion, late fusion, cross fusion) without any recombination.  These experiments, as well as those from the previous level, serve as the baselines we set to surpass in order to show the efficacy of the rest of the fusion approaches.
 As an example, we may obtain a representation matrix by performing an early fusion between the lexical matrix and the syntactical features matrix: $E(M^{LEX}, M^{SYN})$.
-\item \textbf{Second-degree Fusion}: here we recombine the outputs of the previous two levels with the elementary techniques. This procedure then yields a recombination of "second-degree" among fusion methods. A second-degree fusion would be an early fusion of the lexical feature matrix with a cross-media fusion, expressed as $E(M^{LEX}, X(S^{STD}, M^{STD}))$.   
-\item \textbf{N-degree Fusion}: in this last level we follow a similar approach to the previous level by coombining the output of the second-degree fusion level multiple times with other second-degree fusion outputs. As an example, the equation $E(L(M^{STD}, \allowbreak X(S^{STD}, M^{STD})),  L(M^{LEX}, X(S^{SYN}, M^{LEX})))$  denotes the early fusion between two operations: (1) a late fusion between a lexical-features matrix and a cross-media fusion, and (2),  another late fusion consisting of a standard-features matrix (this matrix is detailed below)  and a cross-media fusion. In general, we determine a n-degree fusion empirically. That is to say, we look at the performance of second-degree fusions and try to improve the performance of the systems by recombining the fusion outputs via a n-degree combination. This process is in fact applied during the second-degree fusions also. 
+\item \textbf{Second-degree Fusion}: here we recombine the outputs of the previous two levels with the elementary techniques. This procedure then yields a recombination of "second-degree" among fusion methods. A second-degree fusion would be an early fusion of the lexical feature matrix with a cross fusion, expressed as $E(M^{LEX}, \allowbreak X(S^{STD}, M^{STD}))$.   
+\item \textbf{N-degree Fusion}: in this last level we follow a similar approach to the previous level by combining the output of the second-degree fusion level multiple times (more than two times) with other second-degree fusion outputs. As an example, the equation $E(L(M^{STD}, \allowbreak X(S^{STD}, M^{STD})),  L(M^{LEX}, X(S^{SYN}, M^{LEX})))$  \allowbreak denotes the early fusion between two operations: (1) a late fusion between a lexical-features matrix and a cross fusion, and (2),  another late fusion consisting of a standard-features matrix (this matrix is detailed below)  and a cross fusion. In general, we determine a n-degree fusion empirically. That is to say, we look at the performance of second-degree fusions and try to improve the performance of the systems by recombining the fusion outputs via a n-degree combination. This process is in fact applied during the second-degree fusions also. 
 	\end{enumerate}   
 \subsection{Feature Matrices}
 In the previous subsection we presented the fusion operators used in our experiments. Below we detail the three types of features used to describe the words of the corpus tested.
-\paragraph{Lexical Matrix (LEX)}
+\subsubsection{Lexical Matrix (LEX)}
 For each token in the corpus, we use a lexical window of two words to the left and two words to the right, plus the token itself. Specifically, for a target word $w$, its lexical context is $(w_{-2}, w_{-2}, w, w_{+1}, w_{+2})$. This type of context features is typical for any system studying the sourroundings of a word, i.e., using a distributional approach.
 % We retake the example phrase from \cite{LevyG14}, the lexical-based features of the phrase \textit{Australian scientist discovers start with telescope}, are shown in Table \ref{tab:lex-contexts}.
 %\begin{table*}[ht]
@@ -222,12 +208,11 @@ For each token in the corpus, we use a lexical window of two words to the left a
 %\caption{Lexical features corresponding to the phrase \textit{Australian scientist discovers start with telescope}.}
 %\end{table*} 
 
-\paragraph{Syntactical Matrix (SYN)}
-Based on the syntactic features used in   \cite{LevyG14,Panchenko2017}, we derive contexts based on the syntactic relations a word participates in, as well as including the part of speech (PoS) of the arguments of these relations. Formally, for a word $w$ with modifiers $m_1, \dots, m_k$ and their corresponding PoS tags $p^m_1, \dots, p^m_k$; a head $h$ and its corresponding PoS tag $p^h$, we consider the context features $(m_1, p_{m_1}, lbl_1), \dots, \allowbreak (m_k, p_{m_k}, lbl_k), \allowbreak (h,p_h,lbl\_inv_h)$. In this case, $lbl$ and $lbl_inv$ indicate the label of the dependency relation and its inverse, correspondingly. Using syntactic dependencies as features should yield more specific similarities, closer to synonymy, instead of the broader topical similarity found through lexical contexts.
+\subsubsection{Syntactical Matrix (SYN)}
+Based on the syntactic features used in   \cite{LevyG14,Panchenko2017}, we derive contexts based on the syntactic relations a word participates in, as well as including the part of speech (PoS) of the arguments of these relations. Formally, for a word $w$ with modifiers $m_1, \dots, m_k$ and their corresponding PoS tags $p^m_1, \dots, p^m_k$; a head $h$ and its corresponding PoS tag $p_h$, we consider the context features $(m_1, p_{m_1}, lbl_1), \dots, \allowbreak (m_k, p_{m_k}, lbl_k), \allowbreak (h,p_h,lbl\_inv_h)$. In this case, $lbl$ and $lbl_{inv}$ indicate the label of the dependency relation and its inverse, correspondingly. Using syntactic dependencies as features should yield more specific similarities, closer to synonymy, instead of the broader topical similarity found through lexical contexts.
 %For the phrase \textit{Australian scientist discovers start with telescope} the dependency-based context is shown in Table \ref{tab:syn-contexts}.
-\paragraph{NER Standard Features Matrix (STD)}
-
-The features used for NER are based roughly the same as those used for the same task in \cite{Daume2006,Balasuriya2009}. The feature set consists of: the word itself, whether the word begins with capital letter, prefix and suffix up to three characters (within a window of two words to the left and two words to the right), and the PoS tag of the current word. These features are considered to be standard in the literature. We note that the matrix generated with these features is exclusively used in the experiments regarding NER.	
+\subsubsection{NER Standard Features Matrix (STD)}
+The features used for NER are based roughly on the same as those used in \cite{Daume2006,Balasuriya2009}. The feature set consists of: the word itself, whether the word begins with capital letter, prefix and suffix up to three characters (within a window of two words to the left and two words to the right), and the PoS tag of the current word. These features are considered to be standard in the literature. We note that the matrix generated with these features is exclusively used in the experiments regarding NER.	
 
 \subsection{Learning Methods}
 We use supervised and unsupervised learning methods for NER and WSI/WSD respectively. On the one hand, for NER, as supervised algorithm, we use an averaged structured perceptron \cite{Collins2002,Daume2006} to determine the tags of the named entities. We considered Logistic Regression and linear SVM. We chose the perceptron because of its performance and the lower training time.

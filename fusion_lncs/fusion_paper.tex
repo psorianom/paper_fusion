@@ -290,7 +290,7 @@ We evaluate our NER models following the standard CoNLL-2003 evaluation script. 
 \centering
 \begin{tabular}{@{}lccc@{}}
 \toprule
-             Feature                & \multicolumn{3}{c}{\textbf{Baselines}} \\ \midrule
+$A$                           & \multicolumn{3}{c}{\textbf{Single Features}} \\ \midrule
                 & \textbf{CONLL}    & \textbf{WNER}     & \textbf{WGLD}    \\ \cmidrule{2-4}
 $M^{STD}$                        & 77.41    & 77.50    & 59.66   \\
 $M^{LEX}$                       & 69.40    & 69.17    & 52.34   \\
@@ -300,38 +300,12 @@ $M^{SYN}$                        & 32.95    & 28.47    & 25.49   \\ \bottomrule
 \label{my-label}
 \end{table}
 %second table
+
+
 \begin{table}[h]
 \centering
 \label{my-label}
-\begin{tabular}{@{}lllll@{}}
-\toprule
-    $A$      &    $B$       & \multicolumn{3}{c}{Early Fusion $E(A,B)$}                                            \\ \midrule
-          &           & CONLL                      & WNER                      & WGLD                      \\ \cmidrule{3-5}
-$M^{LEX}$ & $M^{SYN}$ & 72.01                      & 70.59                     & 59.38                     \\
-$M^{LEX}$ & $M^{STD}$ & 78.13                      & 79.78                     & 61.96                     \\
-$M^{SYN}$ & $M^{STD}$ & 77.70                      & 78.10                     & 60.93                     \\
-\midrule
-          &           & \multicolumn{3}{c}{Late Fusion $L(A,B)$}                                             \\
-\midrule     
-          &           & CONLL                      & WNER                      & WGLD                      \\ \cmidrule{3-5}
-$S^{LEX}$ & $S^{SYN}$ & 61.65                      & 58.79                     & 44.29                     \\
-$S^{LEX}$ & $S^{STD}$ & 55.64                      & 67.70                     & 48.00                     \\
-$S^{SYN}$ & $S^{STD}$ & 50.21                      & 58.41                     & 49.81                     \\
-\midrule
-          &           & \multicolumn{3}{c}{Cross Early Fusion $X(A,B)$} \\
-\midrule
-          &           & CONLL                      & WNER                      & WGLD                      \\ \cmidrule{3-5}
-$S^{LEX}$ & $\hat{b}_{\scriptscriptstyle XEF}$        & 49.90                      & 70.27                     & 62.69                     \\
-$S^{SYN}$ & $M^{STD}$ & 47.27                      & 51.38                     & 48.53                     \\
-$S^{STD}$ & $\hat{b}_{\scriptscriptstyle XEF}$        & 52.89                      & 62.21                     & 50.15                     \\
-\midrule
-          &           & \multicolumn{3}{c}{Cross Late Fusion $X(A,B)$}  \\
-\midrule
-          &           & CONLL                      & WNER                      & WGLD                      \\ \cmidrule{3-5}
-$S^{LEX}$ & $S^{STD}$ & 27.75                      & 59.12                     & 38.35                     \\
-$S^{SYN}$ & $\hat{b}_{\scriptscriptstyle XLF}$       & 36.87                      & 40.92                     & 39.62                     \\
-$S^{STD}$ & $\hat{b}_{\scriptscriptstyle XLF}$        & 52.89                      & 62.21                     & 50.15                     \\ \bottomrule
-\end{tabular}
+\include{ner_1d}
 \caption{My caption}
 % | B in $\{M^{LEX}, M^{STD}, M^{SYN}\}$
 %| B in $\{S^{LEX}, S^{STD}, S^{SYN}\}$
@@ -350,7 +324,7 @@ The WSI/WSD model is tested on the dataset of  the SEMEVAL-2007 WSID task \cite{
 %\include{wikiner_tables}
 %\include{wikigold_tables}
 \subsection{Word Sense Induction and Disambiguation}
-\include{semeval2007}
+\textit{}\include{semeval2007}
 
 \section{Conclusion and Future Work}
 

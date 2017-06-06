@@ -23,6 +23,8 @@
 \usepackage{graphicx}
 \usepackage{array,etoolbox}
 \usepackage{tikz}
+\usepackage{makecell}
+
 \preto\tabular{\setcounter{magicrownumbers}{0}}
 %\newcommand{\circlednumber}[1]{\raisebox{.5pt}{\textcircled{\raisebox{-.9pt} {#1}}}}
 \newcommand*\circlednumber[1]{\tikz[baseline=(char.base)]{
@@ -181,7 +183,7 @@ X_{\gamma}(A,B) = \mathbf{K}(A,\gamma) \times B
 
 %\vspace{.3cm}
 
-Parameters $A$ and $B$ are input matrices. They may initially represent, for example,  the lexical ($M^{LEX}$) or syntactical based ($M^{SYN}$) features matrix, or their  corresponding similarity matrices, $S^{LEX}$ and  $S^{SYN}$, ~respectively. In a broader sense, matrices $A$ and $B$ may represent any pair of valid\footnote{Valid in terms of having compatible shapes while computing a matrix sum or multiplication.} fusion matrices. 
+Parameters $A$ and $B$ are arbitrary input matrices. They may initially represent, for example,  the lexical ($M^{LEX}$) or syntactical based ($M^{SYN}$) features matrix, or their  corresponding similarity matrices, $S^{LEX}$ and  $S^{SYN}$, ~respectively. In a broader sense, matrices $A$ and $B$ may represent any pair of valid\footnote{Valid in terms of having compatible shapes while computing a matrix sum or multiplication.} fusion matrices. 
 
 In early fusion, $E_\alpha(A,B)$, the matrices $A$ and $B$ are combined together via a concatenation function $\mathbf{hstack}$ which joins both of them column-wise. The $\alpha$ parameter controls the importance of each matrix.
 
@@ -228,9 +230,8 @@ Based on the syntactic features used in   \cite{LevyG14,Panchenko2017}, we deriv
 The features used for NER are based roughly the same as those used for the same task in \cite{Daume2006,Balasuriya2009}. The feature set consists of: the word itself, whether the word begins with capital letter, prefix and suffix up to three characters (within a window of two words to the left and two words to the right), and the PoS tag of the current word. These features are considered to be standard in the literature. We note that the matrix generated with these features is exclusively used in the experiments regarding NER.	
 
 \subsection{Learning Methods}
-Both tasks, NER and WSI/WSD, are
 We use supervised and unsupervised learning methods for NER and WSI/WSD respectively. On the one hand, for NER, as supervised algorithm, we use an averaged structured perceptron \cite{Collins2002,Daume2006} to determine the tags of the named entities. We considered Logistic Regression and linear SVM. We chose the perceptron because of its performance and the lower training time.
-\textsl{}
+
 On the other hand, for WSD/WSI, specifically for the induction part, we applied spectral clustering, as in  \cite{GoyalH14}, on the input matrices in order to automatically discover senses (a cluster is considered a sense). Regarding disambiguation, we trivially assign senses to the target word instances according to the number of common words in each cluster and the context words of the target word. In other words, for each test instance of a target word, we select the cluster (sense) with the maximum number of shared words with the current instance context.
 
 
@@ -285,31 +286,11 @@ These three datasets are tagged with the same four types of entities: Location, 
 We evaluate our NER models following the standard CoNLL-2003 evaluation script. Given the amount of experiments we carried on, and the size constraints, we report exclusively the total F-score for the four types of entities (Location, Organization, Person, Miscellaneous).
 
 \subsubsection{Results}
-%\include{tba_todo_ner}
-\begin{table}[h]
-\centering
-\begin{tabular}{@{}lccc@{}}
-\toprule
-$A$                           & \multicolumn{3}{c}{\textbf{Single Features}} \\ \midrule
-                & \textbf{CONLL}    & \textbf{WNER}     & \textbf{WGLD}    \\ \cmidrule{2-4}
-$M^{STD}$                        & 77.41    & 77.50    & 59.66   \\
-$M^{LEX}$                       & 69.40    & 69.17    & 52.34   \\
-$M^{SYN}$                        & 32.95    & 28.47    & 25.49   \\ \bottomrule
-\end{tabular}
-\caption{My caption}
-\label{my-label}
-\end{table}
+\include{tba_todo_ner}
+
 %second table
 
 
-\begin{table}[h]
-\centering
-\label{my-label}
-\include{ner_1d}
-\caption{My caption}
-% | B in $\{M^{LEX}, M^{STD}, M^{SYN}\}$
-%| B in $\{S^{LEX}, S^{STD}, S^{SYN}\}$
-\end{table}
 
 \subsection{Word Sense Induction and Disambiguation}
 \subsubsection{Features}
@@ -324,7 +305,7 @@ The WSI/WSD model is tested on the dataset of  the SEMEVAL-2007 WSID task \cite{
 %\include{wikiner_tables}
 %\include{wikigold_tables}
 \subsection{Word Sense Induction and Disambiguation}
-\textit{}\include{semeval2007}
+\include{semeval2007}
 
 \section{Conclusion and Future Work}
 

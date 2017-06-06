@@ -1,0 +1,257 @@
+% This is LLNCSDE2.TEX, a variation of LLNCS.DEM
+% (the demonstration file of
+% the LaTeX macro package from Springer-Verlag
+% for Lecture Notes in Computer Science,
+% version 2.3 for LaTeX2e),
+% which can be used by volume editors for the preparation
+% of the front matter pages and the author index
+%
+% Last changes: 16.10.2006, Frank Holzwarth (texhelp@springer.de)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% In order to generate an Author Index do the following:
+% After TeXing this document start the program MakeIndex by typing
+% MAKEINDX -S SPRMINDX.STY <filename>
+% (generates an IND file for the Author Index)
+% into the DOS command line.
+% (At other systems you may have to use the command MAKEINDEX.)
+% Now TeX this file once again, then you will get an Author Index.
+% TeX this file once more, then the TOC will be complete.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{llncs}
+%
+\usepackage{makeidx}  % allows for indexgeneration
+\makeindex
+%
+\begin{document}
+%
+\frontmatter          % for the preliminaries
+\setcounter{page}{5}
+%
+\pagestyle{headings}  % switches on printing of running heads
+\addtocmark{Hamiltonian Mechanics} % additional mark in the TOC
+%
+\chapter*{Preface}
+%
+This textbook is intended for use by students of physics, physical
+chemistry, and theoretical chemistry. The reader is presumed to have a
+basic knowledge of atomic and quantum physics at the level provided, for
+example, by the first few chapters in our book {\it The Physics of Atoms
+and Quanta}. The student of physics will find here material which should
+be included in the basic education of every physicist. This book should
+furthermore allow students to acquire an appreciation of the breadth and
+variety within the field of molecular physics and its future as a
+fascinating area of research.
+
+For the student of chemistry, the concepts introduced in this book will
+provide a theoretical framework for that entire field of study. With the
+help of these concepts, it is at least in principle possible to reduce
+the enormous body of empirical chemical knowledge to a few basic
+principles: those of quantum mechanics. In addition, modern physical
+methods whose fundamentals are introduced here are becoming increasingly
+important in chemistry and now represent indispensable tools for the
+chemist. As examples, we might mention the structural analysis of
+complex organic compounds, spectroscopic investigation of very rapid
+reaction processes or, as a practical application, the remote detection
+of pollutants in the air.
+
+\vspace{1cm}
+\begin{flushright}\noindent
+April 1995\hfill Walter Olthoff\\
+Program Chair\\
+ECOOP'95
+\end{flushright}
+%
+\chapter*{Organization}
+ECOOP'95 is organized by the department of Computer Science, Univeristy
+of \AA rhus and AITO (association Internationa pour les Technologie
+Object) in cooperation with ACM/SIGPLAN.
+%
+\section*{Executive Committee}
+\begin{tabular}{@{}p{5cm}@{}p{7.2cm}@{}}
+Conference Chair:&Ole Lehrmann Madsen (\AA rhus University, DK)\\
+Program Chair:   &Walter Olthoff (DFKI GmbH, Germany)\\
+Organizing Chair:&J\o rgen Lindskov Knudsen (\AA rhus University, DK)\\
+Tutorials:&Birger M\o ller-Pedersen\hfil\break
+(Norwegian Computing Center, Norway)\\
+Workshops:&Eric Jul (University of Kopenhagen, Denmark)\\
+Panels:&Boris Magnusson (Lund University, Sweden)\\
+Exhibition:&Elmer Sandvad (\AA rhus University, DK)\\
+Demonstrations:&Kurt N\o rdmark (\AA rhus University, DK)
+\end{tabular}
+%
+\section*{Program Committee}
+\begin{tabular}{@{}p{5cm}@{}p{7.2cm}@{}}
+Conference Chair:&Ole Lehrmann Madsen (\AA rhus University, DK)\\
+Program Chair:   &Walter Olthoff (DFKI GmbH, Germany)\\
+Organizing Chair:&J\o rgen Lindskov Knudsen (\AA rhus University, DK)\\
+Tutorials:&Birger M\o ller-Pedersen\hfil\break
+(Norwegian Computing Center, Norway)\\
+Workshops:&Eric Jul (University of Kopenhagen, Denmark)\\
+Panels:&Boris Magnusson (Lund University, Sweden)\\
+Exhibition:&Elmer Sandvad (\AA rhus University, DK)\\
+Demonstrations:&Kurt N\o rdmark (\AA rhus University, DK)
+\end{tabular}
+%
+\begin{multicols}{3}[\section*{Referees}]
+V.~Andreev\\
+B\"arwolff\\
+E.~Barrelet\\
+H.P.~Beck\\
+G.~Bernardi\\
+E.~Binder\\
+P.C.~Bosetti\\
+Braunschweig\\
+F.W.~B\"usser\\
+T.~Carli\\
+A.B.~Clegg\\
+G.~Cozzika\\
+S.~Dagoret\\
+Del~Buono\\
+P.~Dingus\\
+H.~Duhm\\
+J.~Ebert\\
+S.~Eichenberger\\
+R.J.~Ellison\\
+Feltesse\\
+W.~Flauger\\
+A.~Fomenko\\
+G.~Franke\\
+J.~Garvey\\
+M.~Gennis\\
+L.~Goerlich\\
+P.~Goritchev\\
+H.~Greif\\
+E.M.~Hanlon\\
+R.~Haydar\\
+R.C.W.~Henderso\\
+P.~Hill\\
+H.~Hufnagel\\
+A.~Jacholkowska\\
+Johannsen\\
+S.~Kasarian\\
+I.R.~Kenyon\\
+C.~Kleinwort\\
+T.~K\"ohler\\
+S.D.~Kolya\\
+P.~Kostka\\
+U.~Kr\"uger\\
+J.~Kurzh\"ofer\\
+M.P.J.~Landon\\
+A.~Lebedev\\
+Ch.~Ley\\
+F.~Linsel\\
+H.~Lohmand\\
+Martin\\
+S.~Masson\\
+K.~Meier\\
+C.A.~Meyer\\
+S.~Mikocki\\
+J.V.~Morris\\
+B.~Naroska\\
+Nguyen\\
+U.~Obrock\\
+G.D.~Patel\\
+Ch.~Pichler\\
+S.~Prell\\
+F.~Raupach\\
+V.~Riech\\
+P.~Robmann\\
+N.~Sahlmann\\
+P.~Schleper\\
+Sch\"oning\\
+B.~Schwab\\
+A.~Semenov\\
+G.~Siegmon\\
+J.R.~Smith\\
+M.~Steenbock\\
+U.~Straumann\\
+C.~Thiebaux\\
+P.~Van~Esch\\
+from Yerevan Ph\\
+L.R.~West\\
+G.-G.~Winter\\
+T.P.~Yiou\\
+M.~Zimmer\end{multicols}
+%
+\section*{Sponsoring Institutions}
+%
+Bernauer-Budiman Inc., Reading, Mass.\\
+The Hofmann-International Company, San Louis Obispo, Cal.\\
+Kramer Industries, Heidelberg, Germany
+%
+\tableofcontents
+%
+\mainmatter              % start of the contributions
+
+% first contribution
+
+\title{Hamiltonian Mechanics unter besonderer Ber\"ucksichtigung der
+h\"ohreren Lehranstalten}
+%
+%\titlerunning{Hamiltonian Mechanics}  % abbreviated title (for running head)
+%                                     also used for the TOC unless
+%                                     \toctitle is used
+%
+\author{Ivar Ekeland\inst{1} \and Roger Temam\inst{2}
+Jeffrey Dean \and David Grove \and Craig Chambers \and Kim~B.~Bruce \and
+Elisa Bertino}
+%
+%\authorrunning{Ivar Ekeland et al.}   % abbreviated author list (for running head)
+%
+%%%% list of authors for the TOC (use if author list has to be modified)
+\tocauthor{Ivar Ekeland, Roger Temam, Jeffrey Dean, David Grove,
+Craig Chambers, Kim B. Bruce, Elisa Bertino}
+
+\index{Ekeland, Ivar}
+\index{Temam, Roger}
+\index{Dean, Jeffrey}
+\index{Grove, David}
+\index{Chambers, Craig}
+\index{Bruce, Kim B.}
+\index{Bertino, Elisa}
+% use the command \index{<name>} for index entries
+
+%
+\institute{Princeton University, Princeton NJ 08544, USA,\\
+\email{I.Ekeland@princeton.edu},\\ WWW home page:
+\texttt{http://users/\homedir iekeland/web/welcome.html}
+\and
+Universit\'{e} de Paris-Sud,
+Laboratoire d'Analyse Num\'{e}rique, B\^{a}timent 425,\\
+F-91405 Orsay Cedex, France}
+
+\maketitle              % typeset the title of the contribution
+
+\clearpage
+
+% second contribution
+
+\setcounter{page}{7}
+
+\title{Hamiltonian Mechanics2}
+
+\author{Ivar Ekeland\inst{1} \and Roger Temam\inst{2}}
+
+\index{Ekeland, Ivar}
+\index{Temam, Roger}
+% use the command \index{<name>} for index entries
+
+\institute{Princeton University, Princeton NJ 08544, USA
+\and
+Universit\'{e} de Paris-Sud,
+Laboratoire d'Analyse Num\'{e}rique, B\^{a}timent 425,\\
+F-91405 Orsay Cedex, France}
+
+\maketitle
+
+\clearpage
+
+\setcounter{page}{13}
+
+\addtocmark[2]{Author Index} % additional numbered TOC entry
+\renewcommand{\indexname}{Author Index}
+\printindex
+
+\end{document}

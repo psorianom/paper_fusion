@@ -1,0 +1,62 @@
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}llccc@{}}
+	\toprule
+	$A$                      & $B$            & \multicolumn{3}{c}{Cross Late Early Fusion}  \\ \midrule
+	                         &                & CONLL & WNER  &             WGLD             \\
+	\cmidrule{3-5}
+$\hat{a}$ & $M^{STD}$      & 37.69 & 59.44 &            41.71             \\
+	$\hat{a}$                & $M^{LEX}$      & 38.31 & 58.73 &            41.56             \\
+	$\hat{a}$                & $M^{SYN}$      & 29.31 & 52.06 &            34.91             \\ \midrule
+	                         &                & \multicolumn{3}{c}{Cross Early Early Fusion} \\ \midrule
+	                         &                & CONLL & WNER  &             WGLD             \\
+	\cmidrule{3-5}
+$S^{STD}$ & $b^*$          &   54.34    &    64.20   & 39.59 \\
+	$S^{LEX}$                & $b^*$          &  49.71     &   71.84    &  45.14\\
+	$S^{SYN}$                & $b^*$          &  47.54     &   53.77    & 43.32 \\ \midrule
+	                         &                & \multicolumn{3}{c}{Early Cross Early Fusion} \\ \midrule
+	                         &                & CONLL & WNER  &             WGLD             \\
+	\cmidrule{3-5}
+$M^{STD}$ & $b^*$          & 49.58 & 77.32 &            61.69             \\
+	$M^{LEX}$                & $b^*$          & 49.79 & 66.22 &            53.54             \\
+	$M^{SYN}$                & $b^*$          & 51.53 & 70.94 &            53.70             \\ \midrule
+	                         &                & \multicolumn{3}{c}{Late Cross Early Fusion}  \\ \midrule
+	                         &                & CONLL & WNER  &             WGLD             \\
+	\cmidrule{3-5}
+$M^{STD}$ & $b^*$          &  --   & 75.70 &            54.73             \\
+	$M^{LEX}$                & $\hat{\gamma}$ & 55.08 & 62.27 &            52.39             \\ \bottomrule
+\end{tabular}
+\caption{My caption}
+\label{my-label}
+\end{table}
+
+\begin{table}[h]
+\centering
+\label{my-label}
+\begin{tabular}{@{}llllll@{}}
+\toprule
+    $A$      &    $B$      & \multicolumn{3}{c}{Early Late Cross Early Fusion}                                            \\ \midrule
+          &      &      CONLL                     & WNER                      & WGLD                      \\ \cmidrule{3-5}
+$M^{STD}$ & $ \hat{b}_{\scriptscriptstyle ELXF}$ & 67.16                      & 79.45                     & 62.37                     \\
+\midrule
+          &        &   \multicolumn{3}{c}{Early Early Late Cross Early Fusion}                                             \\
+\midrule     
+          &          & CONLL                      & WNER                      & WGLD                      \\ \cmidrule{3-5}
+$M^{LEX}$ & $ \hat{b}_{\scriptscriptstyle EELXF}$ & 69.07                      & 80.10                     & 64.66                     \\
+$M^{LEX}_{\alpha=0.95}$ & $ \hat{b}_{\scriptscriptstyle EELXF}$  & 78.69                      & 81.75                     & 67.29                     \\		
+\bottomrule
+\end{tabular}
+\caption{My caption}
+% | B in $\{M^{LEX}, M^{STD}, M^{SYN}\}$
+%| B in $\{S^{LEX}, S^{STD}, S^{SYN}\}$
+\end{table}
+

@@ -1,0 +1,126 @@
+
+\def\rownumber{}
+\begin{table*}[]
+\centering
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Method} & \textbf{ALL\_F} & \textbf{ALL\_P} & \textbf{ALL\_R}\\ \midrule
+$M^{STD}$                    & 77.50 & 77.83 & 77.18  \\ 
+$M^{LEX}$                    & 69.17 & 79.07 & 61.47 \\
+$M^{SYN}$                    & 28.47 & 42.25 & 21.47 \\
+                             &       &       &       \\
+$E(M^{LEX}, M^{SYN})$        & 70.59 & 79.86  & 63.25 \\
+$E(M^{LEX}, M^{STD})$        & 79.78 & 80.08 & 79.48 \\
+%                            &       &       &       \\
+$E(M^{SYN}, M^{STD})$        & 78.10 & 78.38 & 77.82 \\
+%                            &       &       &       \\
+                             &       &       &       \\
+$L_{0.5}(S^{LEX}, S^{SYN})$  & 58.79 & 66.35 & 52.77 \\
+$L_{0.5}(S^{LEX}, S^{STD})$  & 67.70   & 70.56 & 65.07 \\
+$L_{0.5}(S^{SYN}, S^{STD})$  & 58.41 & 62.42 & 54.88 \\ \bottomrule
+\end{tabular} 
+\caption{Wikiner Dataset Results. The results reported come from a 5-folds CV.}
+\label{tab:wikigold}
+\end{table*}
+
+
+
+
+
+\begin{table*}[]
+\centering
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Method} & \textbf{ALL\_F} & \textbf{ALL\_P} & \textbf{ALL\_R} \\ \midrule
+$X_5(S^{LEX}, S^{SYN})$      & 52.60           & 63.10           & 45.09           \\
+$X_5(S^{LEX}, S^{STD})$  & 59.12           & 66.87            & 52.98     \\ 
+$X_5(S^{LEX}, M^{LEX})$  & 63.31           & 71.69            & 56.69           \\ 
+$X_5(S^{LEX}, M^{SYN})$  & 51.73           & 63.81            & 43.49           \\ 
+$X_5(S^{LEX}, M^{STD})$* & 70.27           & 73.00            & 67.73           \\  
+%
+                             &       &       &       \\
+$X_{20}(S^{SYN}, S^{LEX})$     & 40.92          & 47.94           & 35.69           \\
+$X_{10}(S^{SYN}, S^{STD})$  & 39.73           & 44.83            & 35.66     \\ 
+$X_5(S^{SYN}, M^{LEX})$ &  47.21          & 54.35            & 41.72          \\ 
+$X_5(S^{SYN}, M^{SYN})$  & 29.52           & 38.59            & 23.91           \\ 
+$X_5(S^{SYN}, M^{STD})$*  & 51.38           & 59.25            & 45.35           \\  
+%
+                             &       &       &       \\
+$X_5(S^{STD}, S^{LEX})$      & 52.03           & 57.11           & 47.78           \\
+$X_5(S^{STD}, S^{SYN})$  &46.28				&51.71						&41.89   \\ 
+$X_5(S^{STD}, M^{LEX})$  & 59.02           & 63.27            & 55.30           \\ 
+$X_{10}(S^{STD}, M^{SYN})$  & 45.33           & 52.08            & 40.14           \\ 
+$X_5(S^{STD}, M^{STD})$*  &62.21	&64.72	&59.89            \\ \bottomrule 
+%
+%
+
+\end{tabular}
+\caption{Wikiner Dataset Results. The results reported come from a 5-folds CV.}
+\label{tab:wikigold}
+\end{table*}
+% % % % % % % % %
+\begin{table*}[]
+\centering
+\begin{tabular}{@{\makebox[2.5em][l]{\rownumber\space}}llll@{}}
+\toprule
+
+\textbf{Method} & \textbf{ALL\_F} & \textbf{ALL\_P} & \textbf{ALL\_R} \\ \midrule
+
+
+%
+$X(X(S^{STD}, S^{SYN}), M^{STD})$  & 50.93           & 56.74           & 46.20\\ 
+$X(X(S^{STD}, S^{SYN}), M^{LEX})$  & 49.06          & 53.41           & 45.37\\ 
+$X(X(S^{STD}, S^{SYN}), M^{SYN})$  & 39.19           & 44.67           & 34.91 \\ 
+\midrule
+%
+$X(X(S^{STD}, S^{SYN}), S^{STD})$  & 46.00           & 49.56           & 42.91\\ 
+$X(X(S^{STD}, S^{SYN}), S^{LEX})$  & 46.87          & 50.63           & 43.63\\ 
+$X(X(S^{STD}, S^{SYN}), S^{SYN})$  & 36.51           & 41.19           & 32.79 \\ 
+\midrule
+$E(M^{LEX}, X(S^{SYN}, M^{LEX}))$      & 65.22	&	72.61	&	59.20           \\
+$E(M^{SYN}, X(S^{SYN}, M^{LEX}))$      & 48.58	&	55.07	&	43.46           \\ 
+$E(M^{STD}, X(S^{SYN}, M^{LEX}))$      & 77.32	&	77.58	&	77.07			\\
+\midrule
+$E(M^{LEX}, X(S^{STD}, M^{STD}))$      & 66.22	&	68.79	&	63.84           \\
+$E(M^{SYN}, X(S^{STD}, M^{STD}))$      & 62.79	&	65.34	&	60.42          \\ 
+$E(M^{STD}, X(S^{STD}, M^{STD}))$      & 71.19	&	71.41	&	70.97           \\
+\midrule
+$E(M^{LEX}, X(S^{SYN}, M^{STD}))$      & 58.61	&	67.13	&	52.00           \\
+$E(M^{SYN}, X(S^{SYN}, M^{STD}))$      & 52.69	&	59.42	&	47.33          \\ 
+\gdef\rownumber{\circlednumber{\stepcounter{magicrownumbers}\arabic{magicrownumbers}}}%
+$E(M^{STD}, X(S^{SYN}, M^{STD}))$      & 72.16	&	72.60	&	71.72           \\
+\midrule
+%
+$L(M^{STD}, X(S^{STD}, M^{STD}))$      & 69.65           & 71.35          & 68.04           \\ 
+$L(M^{STD}, X(S^{SYN}, M^{STD}))$      & 66.83           & 70.45          & 63.56           \\ 
+$L(M^{LEX}, X(S^{SYN}, M^{LEX}))$      & 62.27           & 70.59           & 55.71           \\  
+\midrule
+%
+$E(\circlednumber{1}, \circlednumber{2})$      & 73.15          & 74.46           & 71.88	          \\ \midrule
+%
+$E(M^{STD},\circlednumber{1})$      & 74.96          & 75.10     & 74.83	  \\
+$E(M^{STD}, \circlednumber{2})$      & 75.86          & 76.21  & 75.52	  \\
+$E(M^{STD},\circlednumber{3})$      & 79.45          & 79.79  & 79.11	  \\
+
+\midrule
+%
+$E(M^{LEX}, E(\circlednumber{7}, \circlednumber{3})$       & 80.10          & 80.44           & 79.76         \\
+$E_{0.95}(M^{LEX}, E(\circlednumber{7}, \circlednumber{3})$       & 81.75          & 82.25           & 81.26         \\
+
+%$E(L(M^{STD}, X(S^{STD}, M^{STD})), L(M^{STD}, X(S^{SYN}, M^{STD})))$      & 73.15          & 74.46           & 71.88	          \\ \midrule
+%%
+%$E(M^{STD}, L(M^{STD}, X(S^{STD}, M^{STD})))$      & 74.96          & 75.10     & 74.83	  \\
+%$E(M^{STD}, L(M^{LEX}, X(S^{SYN}, M^{LEX})))$      & 79.45          & 79.79  & 79.11	  \\
+%$E(M^{STD}, L(M^{STD}, X(S^{SYN}, M^{STD})))$      & 75.86          & 76.21  & 75.52	  \\
+%\midrule
+%%
+%$E(M^{LEX}, E(E(M^{STD}, L(M^{LEX}, X(S^{SYN}, M^{LEX}))), L(M^{LEX}, X(S^{SYN}, M^{LEX}))))$       & 80.10          & 80.44           & 79.76         \\
+%$E_{0.95}(M^{LEX}, E(E(M^{STD}, L(M^{LEX}, X(S^{SYN}, M^{LEX}))), L(M^{LEX}, X(S^{SYN}, M^{LEX}))))$       & 81.75          & 82.25           & 81.26         \\
+
+
+\bottomrule
+\end{tabular}
+\caption{Wikiner Dataset Results. The results reported come from a 5-folds CV.}
+\label{tab:wikigold}
+\end{table*}
+\def\rownumber{}

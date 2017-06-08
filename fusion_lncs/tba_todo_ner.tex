@@ -1,104 +1,9 @@
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-\begin{table}[h]
-\centering
-\setlength\tabcolsep{4pt}
-\begin{minipage}{0.48\textwidth}
-\centering
-\caption{F-measure results using the Single Features over the three datasets. These values serve as a first set of baselines. }
-\begin{tabular}{@{}lccc@{}}
-\toprule
-$A$                           & \multicolumn{3}{c}{\textbf{Single Features}} \\ \midrule
-                & \textbf{CONLL}    & \textbf{WNER}     & \textbf{WGLD}    \\ \cmidrule{2-4}
-$M^{\scriptscriptstyle STD}$                        & 77.41    & 77.50    & 59.66   \\
-$M^{\scriptscriptstyle LEX}$                       & 69.40    & 69.17    & 52.34   \\
-$M^{\scriptscriptstyle SYN}$                        & 32.95    & 28.47    & 25.49   \\ \bottomrule
-\end{tabular}
 
-\label{my-label}
-\end{minipage}
-\hfill
-\begin{minipage}{0.48\textwidth}
-\caption{F-measure results using first degree fusion (1F). $B$ is either indicated on the table or $b^*$. In XEF, ${b}^*_{\scriptscriptstyle XEF}$ takes the matrix from the set $\{M^{\scriptscriptstyle LEX}, M^{\scriptscriptstyle STD} \}$ which yields the best performing result. In XLF, $\hat{b}_{\scriptscriptstyle XLF}^{*}$ corresponds to the best performing matrix in $\{S^{\scriptscriptstyle LEX},S^{\scriptscriptstyle SYN}, S^{\scriptscriptstyle STD} \}$.}
+\begin{table}[t]
 \centering
-%\tablewidth=\textwidth
-\begin{tabular}{@{}lllll@{}}
-\toprule
-    $A$      &    $B$       & \multicolumn{3}{c}{\textbf{Early Fusion} $E(A,B)$}                                            \\ \midrule
-          &           & \textbf{CONLL}                      & \textbf{WNER}                      & \textbf{WGLD}                      \\ \cmidrule{3-5}
-$M^{\scriptscriptstyle LEX}$ & $M^{\scriptscriptstyle SYN}$ & 72.01                      & 70.59                     & 59.38                     \\
-$M^{\scriptscriptstyle LEX}$ & $M^{\scriptscriptstyle STD}$ & 78.13                      & 79.78                     & 61.96                     \\
-$M^{\scriptscriptstyle SYN}$ & $M^{\scriptscriptstyle STD}$ & 77.70                      & 78.10                     & 60.93                     \\
-\midrule
-          &           & \multicolumn{3}{c}{\textbf{Late Fusion} $L(A,B)$}                                             \\
-\midrule     
-          &           & \textbf{CONLL}                      & \textbf{WNER}                      & \textbf{WGLD}                      \\ \cmidrule{3-5}
-$S^{\scriptscriptstyle LEX}$ & $S^{\scriptscriptstyle SYN}$ & 61.65                      & 58.79                     & 44.29                     \\
-$S^{\scriptscriptstyle LEX}$ & $S^{\scriptscriptstyle STD}$ & 55.64                      & 67.70                     & 48.00                     \\
-$S^{\scriptscriptstyle SYN}$ & $S^{\scriptscriptstyle STD}$ & 50.21                      & 58.41                     & 49.81                     \\
-\midrule
-          &           & \multicolumn{3}{c}{\textbf{Cross Early Fusion} $X(A,B)$} \\
-\midrule
-          &           & \textbf{CONLL}                      & \textbf{WNER}                      & \textbf{WGLD}                      \\ \cmidrule{3-5}
-$S^{\scriptscriptstyle LEX}$ &$M^{\scriptscriptstyle STD}$        & 49.90                      & 70.27                     & 62.69                     \\
-$S^{\scriptscriptstyle SYN}$ & $M^{\scriptscriptstyle STD}$ & 47.27                      & 51.38                     & 48.53                     \\
-$S^{\scriptscriptstyle STD}$ & ${b}^*_{\scriptscriptstyle XEF}$        & 52.89                      & 62.21                     & 50.15                     \\
-\midrule
-          &           & \multicolumn{3}{c}{\textbf{Cross Late Fusion} $X(A,B)$}  \\
-\midrule
-          &           & \textbf{CONLL}                      & \textbf{WNER}                      & \textbf{WGLD}                      \\ \cmidrule{3-5}
-$S^{\scriptscriptstyle LEX}$ & $S^{\scriptscriptstyle STD}$ & 27.75                      & 59.12                     & 38.35                     \\
-$S^{\scriptscriptstyle SYN}$ & ${b}_{\scriptscriptstyle XLF}^{*}$       & 36.87                      & 40.92                     & 39.62                     \\
-$S^{\scriptscriptstyle STD}$ & ${b}_{\scriptscriptstyle XLF}^{*}$        & 52.89                      & 62.21                     & 50.15                     \\ \bottomrule
-\end{tabular}
-
-% | B in $\{M^{\scriptscriptstyle LEX}, M^{\scriptscriptstyle STD}, M^{\scriptscriptstyle SYN}\}$
-%| B in $\{S^{\scriptscriptstyle LEX}, S^{\scriptscriptstyle STD}, S^{\scriptscriptstyle SYN}\}$
-\end{minipage}
-\end{table}
-
-
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-\begin{table}[]
-\centering
-%\setlength\tabcolsep{4pt}
-\begin{minipage}{0.48\textwidth}
-\centering
-\caption{F-measure results using second degree fusion (2F). In XLEF, ${a^*}$ corresponds to the best performing matrix in the set $\{ X(S^{\scriptscriptstyle STD}, S^{\scriptscriptstyle LEX}),X(S^{\scriptscriptstyle LEX}, S^{\scriptscriptstyle STD}), \allowbreak X(S^{\scriptscriptstyle STD}, S^{\scriptscriptstyle SYN})\}$. For XEEF,  $b^*_{\scriptscriptstyle XEEF}=E(\mlex, \mstd)$. In EXEF, $b^*_{\scriptscriptstyle EXEF}$  takes the best performing matrix from $\{X(\ssyn, \mlex), \allowbreak X(\slex, \mlex), X(\slex, \mstd), \allowbreak X(\ssyn, \mlex), X(\ssyn, \mstd) \}$. Finally, in LXEF, $b^*_{\scriptscriptstyle LXEF}$ takes the best matrix from $\{X(\slex, \mstd), X(\ssyn, \mstd), \allowbreak X(\ssyn, \mlex) \}$.}
+\label{tab:ner-nf}
+\caption{F-measure results using N-degree fusion (NF). In ELXEF, $ \hat{b}_{\scriptscriptstyle ELXEF}=L(\mlex, X(\ssyn, \mlex))$. For EELXEF, $b^*_{\scriptscriptstyle EELXEF} = E(\mlex, E(E(\mstd, \allowbreak L(\mlex, X(\ssyn, \mlex))), \allowbreak L(\mlex, X(\ssyn, \mlex)))) $. The best result is obtained in EELXEF when $\alpha=0.95$.}
 \begin{tabular}{@{}llccc@{}}
-	\toprule
-	$A$                      & $B$            & \multicolumn{3}{c}{\textbf{Cross Late Early Fusion}}  \\ \midrule
-	                         &                & \textbf{CONLL} & \textbf{WNER}  &             \textbf{WGLD}             \\
-	\cmidrule{3-5}
-$\hat{a}$ & $M^{\scriptscriptstyle STD}$      & 37.69 & 59.44 &            41.71             \\
-	$\hat{a}$                & $M^{\scriptscriptstyle LEX}$      & 38.31 & 58.73 &            41.56             \\
-	$\hat{a}$                & $M^{\scriptscriptstyle SYN}$      & 29.31 & 52.06 &            34.91             \\ \midrule
-	                         &                & \multicolumn{3}{c}{\textbf{Cross Early Early Fusion}} \\ \midrule
-	                         &                & \textbf{CONLL} & \textbf{WNER}  &             \textbf{WGLD}             \\
-	\cmidrule{3-5}
-$S^{\scriptscriptstyle STD}$ & $\hat{b}_{\scriptscriptstyle XEEF}$          &   54.34    &    64.20   & 39.59 \\
-	$S^{\scriptscriptstyle LEX}$                &$\hat{b}_{\scriptscriptstyle XEEF}$         &  49.71     &   71.84    &  45.14\\
-	$S^{\scriptscriptstyle SYN}$                & $\hat{b}_{\scriptscriptstyle XEEF}$         &  47.54     &   53.77    & 43.32 \\ \midrule
-	                         &                & \multicolumn{3}{c}{\textbf{Early Cross Early Fusion}} \\ \midrule
-	                         &                & \textbf{CONLL} & \textbf{WNER}  &             \textbf{WGLD}             \\
-	\cmidrule{3-5}
-$M^{\scriptscriptstyle STD}$ & $b^*_{\scriptscriptstyle EXEF}$          & 49.58 & 77.32 &            61.69             \\
-	$M^{\scriptscriptstyle LEX}$                & $b^*_{\scriptscriptstyle EXEF}$      & 49.79 & 66.22 &            53.54             \\
-	$M^{\scriptscriptstyle SYN}$                & $b^*_{\scriptscriptstyle EXEF}$           & 51.53 & 70.94 &            53.70             \\ \midrule
-	                         &                & \multicolumn{3}{c}{\textbf{Late Cross Early Fusion}}  \\ \midrule
-	                         &                & \textbf{CONLL} & \textbf{WNER}  &             \textbf{WGLD}             \\
-	\cmidrule{3-5}
-$M^{\scriptscriptstyle STD}$ &$b^*_{\scriptscriptstyle LXEF}$           &  54.82   & 75.70 &            54.73             \\
-	$M^{\scriptscriptstyle LEX}$                & $b^*_{\scriptscriptstyle LXEF}$  & 56.53 & 62.27 &            52.39             \\ \bottomrule
-\end{tabular}
-
-\label{my-label}
-\end{minipage}
-\begin{minipage}{0.48\textwidth}
-\centering
-\caption{F-measure results using third degree fusion (3F). In ELXEF, $ \hat{b}_{\scriptscriptstyle ELXEF}=L(\mlex, X(\ssyn, \mlex))$. For EELXEF, $b^*_{\scriptscriptstyle EELXEF} = E(\mlex, E(E(\mstd, \allowbreak L(\mlex, X(\ssyn, \mlex))), \allowbreak L(\mlex, X(\ssyn, \mlex)))) $. The best result is obtained in EELXEF when $\alpha=0.95$.}
-\begin{tabular}{@{}llllll@{}}
 \toprule
     $A$      &    $B$      & \multicolumn{3}{c}{\makecell{\textbf{Early Late} \\ \textbf{Cross Early Fusion}}}                                            \\ \midrule
           &      &      \textbf{CONLL}                     & \textbf{WNER}                      & \textbf{WGLD}                      \\ \cmidrule{3-5}
@@ -114,6 +19,5 @@ $M^{\scriptscriptstyle LEX}_{\alpha=0.95}$ & $ \hat{b}_{\scriptscriptstyle EELXE
 
 % | B in $\{M^{\scriptscriptstyle LEX}, M^{\scriptscriptstyle STD}, M^{\scriptscriptstyle SYN}\}$
 %| B in $\{S^{\scriptscriptstyle LEX}, S^{\scriptscriptstyle STD}, S^{\scriptscriptstyle SYN}\}$
-\end{minipage}
 \end{table}
 

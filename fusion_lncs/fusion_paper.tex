@@ -45,7 +45,7 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-In this paper we explore the use of well-known multi-modal fusion techniques to solve two prominent Natural Language Processing tasks. Specifically, we focus on solving Named Entity Recognition and Word Sense Induction and Disambiguation by applying feature-combination methods that have already shown their efficiency in the multi-media analysis domain. We present a series of experiments employing fusion techniques in order to combine textual linguistic features. Our intuition is that by combining different types of features we may find semantic similarities among words at different levels. Thus, the combination (and recombination) of these levels may yield gains in terms of performance. To our knowledge, employing these techniques has not been studied for the tasks we address in this paper. 
+In this paper we explore the use of well-known multimodal fusion techniques to solve two prominent Natural Language Processing tasks. Specifically, we focus on solving Named Entity Recognition and Word Sense Induction and Disambiguation by applying feature-combination methods that have already shown their efficiency in the nultimedia analysis domain. We present a series of experiments employing fusion techniques in order to combine textual linguistic features. Our intuition is that by combining different types of features we may find semantic similarities among words at different levels. Thus, the combination (and recombination) of these levels may yield gains in terms of performance. To our knowledge, employing these techniques has not been studied for the tasks we address in this paper. 
 We test the proposed fusion techniques on three datasets for named entity recognition and one for word sense disambiguation and induction. Our results show that the combination of textual features indeed improves the performance compared to single feature representation and the trivial feature concatenation.
 \end{abstract}
 
@@ -71,13 +71,13 @@ Most of the approaches in the literature dealing with these tasks use each of th
 
 The main intuition of the present work is that word similarities may be found at different levels according to the type of features employed. In order to exploit these similarities, we look into multimedia fusion methods.  In order to better perform an analysis task, these techniques combine multimodal representations, their corresponding similarities, or the decisions coming from models fitted with these features. In this paper, we try to mutually complement independent representations by utilizing said fusion techniques to combine (or fuse) features in the hope of improving the performance of the tasks at hand, specially compared to the use of features independently. 
 
-Fusion techniques have previously shown their efficiency, mainly on image-related tasks, where there is a need to model to leverage the relation  between images and text extracts.
+Fusion techniques have previously shown their efficiency, mainly on image-related tasks, where there is a need to model the relation  between images and text extracts.
 %
 %. 
 %
 Here, in order to apply multimedia fusion techniques, we consider that the textual features  come from different modalities. The main contribution of this work is to assess the effectiveness of simple yet untested techniques to combine classical and easy to obtain textual features. As a second contribution, we propose a series of feature combination and recombination to attain better results. 
 
-The rest of the paper is organized as follows: in section 2, we go into further detail about fusion techniques. 
+The rest of the paper is organized as follows: in section 2, we go into further details about fusion techniques. 
 %as well as its application in the NLP domain. 
 We introduce the fusion operators that we use in our experiments in section 3. Then, in section 4 we show the effectiveness of the presented methods by testing them on NER and WSI/WSD and their respective datasets. Finally, in section 5 we present our conclusions and future directions to explore. A more general overview on fusion for multimedia analysis can be found in \cite{AtreyHEK10}.
 
@@ -88,7 +88,7 @@ We first describe below the fusion techniques we use in our methodology as well 
 Multimodal fusion is a set of popular techniques used in multimedia analysis tasks. T\textit{}hese methods integrate multiple media features, the affinities among these attributes or the decisions obtained from systems trained with said features, to obtain rich insights about the data being used and thus to solve a given analysis  task \cite{AtreyHEK10}. We note that these techniques come at the price of augmenting the complexity of a given system by increasing or reducing the sparsity of a given feature matrix.
 
 
-In the multi-modal fusion literature we can discern two main common types of techniques: early fusion and late fusion. 
+In the multimodal fusion literature we can discern two main common types of techniques: early fusion and late fusion. 
 \subsubsection{Early Fusion}
 This technique is the most widely used fusion method. The principle is simple: we take both modal features and concatenate them into a single representation matrix. More formally, we consider two matrices  that represent different modality features each  over the same set of individuals. To perform early fusion we concatenate them column-wise, such that we form a new matrix having the same number of lines but increasing the number of columns to the sum of the number of columns of both matrices. The matrices may also be weighted as to control the influence of each modality.
 
@@ -102,7 +102,7 @@ The main advantage of early fusion is that a single unique model is fitted while
 
 %where $||$ represents the column-wise concatenation operation and α is the parameter that determines the contribution of each modality. 
 %
-%Early fusion has been employed in several multi-modal tasks. For example, [?]. 
+%Early fusion has been employed in several multimodal tasks. For example, [?]. 
 \subsubsection{Late Fusion}
 In contrast to early fusion, in late fusion the combination of multimodal features are generally performed at the decision level, i.e., using the output of independent models trained  each with an unique set of features \cite{ClinchantAC11}. In this setting,  decisions produced by each model are combined into a single final result set.
 %
@@ -117,15 +117,14 @@ features.
 %For example, in information retrieval (Ah-Pine et al., 2015), lexicon learning (Vulic et al., 2016), coreference resolution (Eisenstein and Davis, 2007); different types of representations (different modalities) can be combined in order to take advantage of the complementarity existing among them
 \subsubsection{Cross-media Similarity Fusion}
 %
-In \cite{Ah-PineCC15,ClinchantAC11}, cross-media similarity fusion, or cross fusion,  is defined and employed to propagate a single modality similarity into a second modality similarity matrix.
+A third type of fusion technique, cross-media similarity fusion (or simply cross fusion),   introduced in \cite{Ah-PineCC15,ClinchantAC11}, is defined and employed to propagate a single similarity matrix into a second similarity matrix. In their paper, the authors propagated information from textual media towards visual media. In our case, we transfer information among textual features. For example, to perform a cross fusion between lexical and syntactical features, we perform the following steps: 
+\begin{enumerate}
+\item Compute the corresponding similarity matrices for each type of feature.
+\item Select only the $k$-nearest neighbor for each word within the lexical similarity matrix. These neighbors are to be used as lexical representatives to enrich the syntactical similarities.
+\item Linearly combine both similarity matrices (lexical $k$-nearest lexical neighbors with the syntactical features) via a matrix product.
+\end{enumerate}  
 
-
-In the context of text features, 
-
-
-Broadly, the procedure tries to bridge the semantic gap between textual and visual information by using the most similar objects in the textual similarity matrix as a proxy to transfer the information to the visual similarity matrix. 
-
-In this paper we also experiment with this type of fusion.
+Cross fusion aims to bridge the semantic gap between two modalities by using the most similar neighbors as proxies to transfer valuable information  from one modality onto another one. Usually, the result of a cross fusion is combined with the previous techniques, early and late fusion. In this paper we perform  experiment in that sense.
 
 \subsubsection{Hybrid Fusion}
 We may leverage the advantages of the previous two types of fusion techniques by combining them once more in a hybrid setting. As described in \cite{AtreyHEK10,yu2014informedia}, the main idea is to simultaneously combine features at the feature level, i.e., early fusion, and at the same semantic space or decision level. Nonetheless, they define a specific type of hybrid fusion. In this paper, we adopt a looser definition of hybrid fusion. That is, we perform hybrid fusion by leveraging the combination of the fusion strategies described before.
@@ -165,7 +164,7 @@ We formally describe the fusion techniques we employ in the next section. Also, 
 \label{fig:diagmetodo}
 \end{figure*}
 
-The experiments we carry on consist in generating fusion matrices that will serve as input to a learning algorithm in order to solve NER and WSI/WSD. These input feature matrices are be based upon lexical, syntactical, or other types of representation. The procedure can be sen in \ref{fig:diagmetodo}.
+The experiments we carry on consist in generating fusion matrices that will serve as input to a learning algorithm in order to solve NER and WSI/WSD. These input feature matrices are based upon lexical, syntactical, or other types of representation. The procedure can be sen in Figure \ref{fig:diagmetodo}.
 
 \subsection{Fusion Strategies}
 We begin by presenting a  formal definition of the fusion techniques employed and described in the previous sections. We define (weighted) early fusion, late fusion and cross fusion as follows:
@@ -223,7 +222,7 @@ Again, in this level we test the following two fusion operations:
 \subsection{Feature Matrices}
 In the previous subsection we presented the fusion operators used in our experiments. Below we detail the three types of features used to describe the words of the corpus tested.
 \subsubsection{Lexical Matrix (LEX)}
-For each token in the corpus, we use a lexical window of two words to the left and two words to the right, plus the token itself. Specifically, for a target word $w$, its lexical context is $(w_{-2}, w_{-2}, w, w_{+1}, w_{+2})$. This type of context features is typical for any system studying the surroundings of a word, i.e., using a distributional approach.
+For each token in the corpus, we use a lexical window of two words to the left and two words to the right, plus the token itself. Specifically, for a target word $w$, its lexical context is $(w_{-2}, w_{-2}, w, w_{+1}, w_{+2})$. This type of context features is typical for most systems studying the surroundings of a word, i.e., using a distributional approach \cite{LevyG14}.
 % We retake the example phrase from \cite{LevyG14}, the lexical-based features of the phrase \textit{Australian scientist discovers start with telescope}, are shown in Table \ref{tab:lex-contexts}.
 %\begin{table*}[ht]
 %\centering
@@ -348,7 +347,7 @@ In Table \ref{tab:ner-1d} we present the First Degree fusion level. The best per
 \begin{minipage}[t]{0.48\textwidth}
 \centering
 
-\caption{NER F-measure results using first degree fusion (1F). $B$ is either indicated on the table or $b^*$. In XEF, ${b}^*_{\scriptscriptstyle XEF}$ takes the matrix from the set $\{M^{\scriptscriptstyle LEX}, M^{\scriptscriptstyle STD} \}$ which yields the best performing result. In XLF, $\hat{b}_{\scriptscriptstyle XLF}^{*}$ corresponds to the best performing matrix in $\{S^{\scriptscriptstyle LEX},S^{\scriptscriptstyle SYN}\}$. These configurations serve as a second set of baseline results.}
+\caption{NER F-measure results using first degree fusion (1F). $B$ is either indicated on the table or specified as follows. Looking at EF,  $\hat{b}_{EF} = E(\msyn, \mstd)$. In XEF, ${b}^*_{\scriptscriptstyle XEF}$ takes the matrix from the set $\{M^{\scriptscriptstyle LEX}, M^{\scriptscriptstyle STD} \}$ which yields the best performing result. In XLF, $\hat{b}_{\scriptscriptstyle XLF}^{*}$ corresponds to the best performing matrix in $\{S^{\scriptscriptstyle LEX},S^{\scriptscriptstyle SYN}\}$. These configurations serve as the main set of baseline results.}
 \label{tab:ner-1d}
 \centering
 %\tablewidth=\textwidth
@@ -359,6 +358,7 @@ In Table \ref{tab:ner-1d} we present the First Degree fusion level. The best per
 $M^{\scriptscriptstyle LEX}$ & $M^{\scriptscriptstyle SYN}$ & 72.01                      & 70.59                     & 59.38                     \\
 $M^{\scriptscriptstyle LEX}$ & $M^{\scriptscriptstyle STD}$ & 78.13                      & 79.78                     & 61.96                     \\
 $M^{\scriptscriptstyle SYN}$ & $M^{\scriptscriptstyle STD}$ & 77.70                      & 78.10                     & 60.93                     \\
+$M^{\scriptscriptstyle LEX}$ & $\hat{b}_{EF}$ & 78.90                      & 80.04                     & 63.20                     \\
 \midrule
           &           & \multicolumn{3}{r}{\textbf{Late Fusion} }                                             \\
 \midrule     
@@ -432,7 +432,7 @@ In the next section we transfer the knowledge gained in this task to a new one, 
 \begin{table}[t]
 \centering
 
-\caption{F-measure results using N-degree fusion (NF). In ELXEF, $ \hat{b}_{\scriptscriptstyle ELXEF}=L(\mlex, X(\ssyn, \mlex))$. For EELXEF, $\hat{b}_{\scriptscriptstyle EELXEF} = E(\mlex, E(E(\mstd, \allowbreak L(\mlex, X(\ssyn, \mlex))), \allowbreak L(\mlex, X(\ssyn, \mlex)))) $. The best result is obtained in EELXEF when $\alpha=0.95$.}
+\caption{F-measure results using N-degree fusion (NF). In ELXEF, $ \hat{b}_{\scriptscriptstyle ELXEF}=L(\mlex, X(\ssyn, \mlex))$. For EELXEF, $\hat{b}_{\scriptscriptstyle EELXEF} =  E(E(\mstd, 	 L(\mlex, X(\ssyn, \mlex))), \allowbreak L(\mlex, X(\sstd, \mlex)))$ for CONLL and $\hat{b}_{\scriptscriptstyle EELXEF} =  E(E(\mstd, 	 L(\mstd, X(\ssyn, \mstd))), L(\mlex, X(\ssyn, \mlex)))$ for WNER and WGLD. The best result is obtained in EELXEF when $\alpha=0.95$.}
 \label{tab:ner-nf1}
 \begin{tabular}{@{}llccc@{}}
 \toprule
@@ -443,8 +443,13 @@ $M^{\scriptscriptstyle STD}$ & $ \hat{b}_{\scriptscriptstyle ELXEF}$ & 67.16    
           &        &   \multicolumn{3}{r}{\makecell{\textbf{Early Early} \\ \textbf{Late Cross Early Fusion}}}                                             \\
 \midrule     
           &          & \textbf{CONLL}                      & \textbf{WNER}                      & \textbf{WGLD}                      \\ \cmidrule{3-5}
-$M^{\scriptscriptstyle LEX}$ & $ \hat{b}_{\scriptscriptstyle EELXEF}$ & 69.07                      & 80.10                     & 64.66                     \\
-$M^{\scriptscriptstyle LEX}_{\alpha=0.95}$ & $ \hat{b}_{\scriptscriptstyle EELXEF}$  & 78.69                      & 81.75                     & 67.29                     \\		
+%&& EF & EF & EF \\        
+%\cmidrule(l){3-3}\cmidrule(l){4-4}\cmidrule(l){5-5}
+
+  
+$M^{\scriptscriptstyle LEX}$ & $ \hat{b}_{\scriptscriptstyle EELXEF}$ & 65.01                      & 78.02                     & 62.34                    \\
+$M^{\scriptscriptstyle LEX}_{\alpha=0.95}$ & $ \hat{b}_{\scriptscriptstyle EELXEF}$  & 79.67                      & 81.79                     & 67.05                     \\ \midrule
+\multicolumn{2}{l}{EF Baseline} & 78.90                      & 80.04                     & 63.20                     \\ 
 \bottomrule
 \end{tabular}
 
@@ -456,7 +461,7 @@ $M^{\scriptscriptstyle LEX}_{\alpha=0.95}$ & $ \hat{b}_{\scriptscriptstyle EELXE
 
 \subsection{Word Sense Induction and Disambiguation}
 Having learned the best fusion configuration from the previous task, in this experiments we set to test if the improvements achieved can be transfered into another NLP task, namely Word Sensed Induction and Disambiguation (WSI/WSD).
-\include{semeval2007}
+\input{semeval2007}
 \subsubsection{Pre-processing}
 We simply remove stopwords and tokens with less than three letters.
 \subsubsection{Features}
@@ -466,7 +471,7 @@ The WSI/WSD model is tested on the dataset of  the SEMEVAL-2007 WSID task \cite{
 
 
 \subsubsection{Evaluation Measures}
-Being an unsupervised task, the evaluation metrics of WSI/WSD are debated in terms of quality \cite{CruysA11}. We consider supervised recall and unsupervised F-measure, as in the competition original paper \cite{Agirre2007}. The first one maps the output of out system to the true senses of the target words' instances and the second one measures the quality of the correspondence between the automatically found clusters and the senses. 
+Being an unsupervised task, the evaluation metrics of WSI/WSD are debated in terms of quality \cite{CruysA11}. We consider supervised recall and unsupervised F-measure, as in the competition original paper \cite{Agirre2007}. The first one maps the output of a system to the true senses of the target words' instances and the second one measures the quality of the correspondence between the automatically found clusters and the senses. 
 We consider that the number of senses found by the system is also a rather good indicator of performance: the best competition baseline assigns the most frequent sense to each target word (this baseline is called MFS), thus this baseline system would have an average of 1 sense (cluster) per word. A system that goes near this average may be indeed not resolving the task efficiently but finding the MFS trivial solution. Consequently, to show that we do not fall in the MFS solution, we display in our results the average number of clusters.
 
 \subsubsection{Results}
@@ -485,7 +490,7 @@ We test the same configurations as in NER, within the NF level, to try and impro
 In general, we found that the recombination fusion techniques work in terms of improving the performance of the tasks addressed. In the following, we make our final remarks and the future work to be done regarding fusion techniques on NLP tasks.
 
 \section{Conclusion and Future Work}
-In this paper, we presented a comparative study of multi-media fusion techniques applied to two NLP tasks: Named Entity Recognition and Word Sense Induction and Disambiguation. We also proposed new fusion recombinations in order to complement the information contained in the single representation matrices. In order to accomplish this goal, we built upon basic fusion techniques such as early and late fusion, as well as cross media fusion to transfer quality information from one set of features to another. 
+In this paper, we presented a comparative study of nultimedia fusion techniques applied to two NLP tasks: Named Entity Recognition and Word Sense Induction and Disambiguation. We also proposed new fusion recombinations in order to complement the information contained in the single representation matrices. In order to accomplish this goal, we built upon basic fusion techniques such as early and late fusion, as well as cross media fusion to transfer quality information from one set of features to another. 
 
 We found that by taking a strong feature, in our case lexical context, $\mlex$, and enriching it with the output of rather complex fusion combinations, we can improve the performance of the tasks addressed. The enrichment has to give more relevance to the strong feature matrix, by selecting the right parameters. 
 

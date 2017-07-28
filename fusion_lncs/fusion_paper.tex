@@ -75,7 +75,7 @@ Fusion techniques have previously shown their efficiency, mainly on image-relate
 %
 %. 
 %
-Here, in order to apply multimedia fusion techniques, we consider that the textual features  come from different modalities. The main contribution of this work is to assess the effectiveness of simple yet untested techniques to combine classical and easy to obtain textual features. As a second contribution, we propose a series of feature combination and recombination to attain better results. We experiment on two 
+Here, in order to apply multimedia fusion techniques, we consider that the textual features  come from different modalities. The main contribution of this work is to assess the effectiveness of simple yet untested techniques to combine classical and easy to obtain textual features. As a second contribution, we propose a series of feature combination and recombination to attain better results. We test our intuitions on both NER and WSI/WSD tasks and over four different corpora: CoNLL-2003 \cite{SangM03}, WikiNER and Wikigold \cite{Balasuriya2009} for NER; Semeval-2007 \cite{Agirre2007}.
 
 The rest of the paper is organized as follows: in Section 2, we go into further details about fusion techniques. 
 %as well as its application in the NLP domain. 
@@ -467,7 +467,7 @@ We simply remove stopwords and tokens with less than three letters.
 \subsubsection{Features}
 We use the same set of features from the previous task, with the exception of the standard NER features, that is, those represented by $M^{STD}$, as they are specifically designed to tackle NER.
 \subsubsection{Test Dataset}
-The WSI/WSD model is tested on the dataset of  the SEMEVAL-2007 WSID task \cite{Agirre2007}. The task was based on a set of 100 target words (65 nouns and 35 verbs), each  word having a set of instances, which are specific contexts where the word appear. Senses are induced from these contexts and applied to each one of the instances.
+The WSI/WSD model is tested on the dataset of  the Semeval-2007 WSID task \cite{Agirre2007}. The task was based on a set of 100 target words (65 nouns and 35 verbs), each  word having a set of instances, which are specific contexts where the word appear. Senses are induced from these contexts and applied to each one of the instances.
 
 
 \subsubsection{Evaluation Measures}

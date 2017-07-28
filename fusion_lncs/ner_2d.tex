@@ -1,0 +1,26 @@
+\begin{tabular}{@{}llccc@{}}
+	\toprule
+	$A$                      & $B$            & \multicolumn{3}{c}{Cross Late Early Fusion}  \\ \midrule
+	                         &                & CONLL & WNER  &             WGLD             \\
+	\cmidrule{3-5}
+$\hat{a}$ & $M^{STD}$      & 37.69 & 59.44 &            41.71             \\
+	$\hat{a}$                & $M^{LEX}$      & 38.31 & 58.73 &            41.56             \\
+	$\hat{a}$                & $M^{SYN}$      & 29.31 & 52.06 &            34.91             \\ \midrule
+	                         &                & \multicolumn{3}{c}{Cross Early Early Fusion} \\ \midrule
+	                         &                & CONLL & WNER  &             WGLD             \\
+	\cmidrule{3-5}
+$S^{STD}$ & $b^*$          &   54.34    &    64.20   & 39.59 \\
+	$S^{LEX}$                & $b^*$          &  49.71     &   71.84    &  45.14\\
+	$S^{SYN}$                & $b^*$          &  47.54     &   53.77    & 43.32 \\ \midrule
+	                         &                & \multicolumn{3}{c}{Early Cross Early Fusion} \\ \midrule
+	                         &                & CONLL & WNER  &             WGLD             \\
+	\cmidrule{3-5}
+$M^{STD}$ & $b^*$          & 49.58 & 77.32 &            61.69             \\
+	$M^{LEX}$                & $b^*$          & 49.79 & 66.22 &            53.54             \\
+	$M^{SYN}$                & $b^*$          & 51.53 & 70.94 &            53.70             \\ \midrule
+	                         &                & \multicolumn{3}{c}{Late Cross Early Fusion}  \\ \midrule
+	                         &                & CONLL & WNER  &             WGLD             \\
+	\cmidrule{3-5}
+$M^{STD}$ & $b^*$          &  --   & 75.70 &            54.73             \\
+	$M^{LEX}$                & $\hat{\gamma}$ & 55.08 & 62.27 &            52.39             \\ \bottomrule
+\end{tabular}

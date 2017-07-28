@@ -189,7 +189,7 @@ X_{\gamma}(A,B) = \mathbf{K}(A,\gamma) \times B
 
 Parameters $A$ and $B$ are arbitrary input matrices. They may initially represent, for example,  the lexical ($M^{LEX}$) or syntactical based ($M^{SYN}$) features matrix, or their  corresponding similarity matrices, $S^{LEX}$ and  $S^{SYN}$, ~respectively. In a broader sense, matrices $A$ and $B$ may represent any pair of valid\footnote{Valid in terms of having compatible shapes while computing a matrix sum or multiplication.} fusion matrices. 
 
-In early fusion, $E(A,B)$, the matrices $A$ and $B$ are combined together via a  function named $\mathbf{hstack}$. This function concatenates, column-wise, both matrices $A$ and  $B$. Weighted early fusion  represents the same operation as before with an extra parameter: $\alpha$, which controls the relative importance of each matrix. In the following, we refer to both operations as early fusion. When $\alpha$ is determined, we refer to weighted early fusion.
+In early fusion, $E(A,B)$, the matrices $A$ and $B$ are combined together via a  function called $\mathbf{hstack}$ which concatenates, column-wise, both matrices $A$ and  $B$. Weighted early fusion  represents the same operation as before with an extra parameter: $\alpha$, which controls the relative importance of each matrix. In the following, we refer to both operations as early fusion. When $\alpha$ is determined, we refer to weighted early fusion.
 
 Regarding late fusion $L_\beta(A,B)$, the  $\beta$ parameter determines again the importance of the  matrix $A$,  and consequently also the relevance of matrix $B$.
 

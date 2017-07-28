@@ -296,7 +296,7 @@ This allows a degree of abstraction to tokens that contain years, phone numbers,
 \subsubsection{Features}
 The linguistic information we use are extracted with the Stanford's CoreNLP parser \cite{manning2014}. Again, the features used for these experiments on NER are those described before: lexical, syntactic and standard features, i.e., $M^{LEX}$, $M^{SYN}$, and $M^{STD}$, respectively. 
 
-\subsubsection{Test Datasets}We work with three corpus coming from different domains:
+\subsubsection{Test Datasets}We work with three corpora coming from two different domains:
 \begin{itemize}
 \item [(1)] CoNLL-2003 (CONLL): This dataset was used in the language-independent named entity recognition CoNLL-2003 shared task \cite{SangM03}. It contains selected news-wire articles from the Reuters Corpus. Each article is annotated manually. It is divided in three parts:  training (\textit{train}) and two testing sets (\textit{testa} and \textit{testb}). The training part contains 219,554 lines, while the test sets contain 55,044 and 50,350 lines, respectively. The task was evaluated on the \textit{testb} file, as in the original task.
 \item [(2)]WikiNER (WNER): A more recent dataset \cite{Balasuriya2009} of selected English \allowbreak Wikipedia articles, all of them annotated automatically with the author's semi-supervised \allowbreak method. In total, it contains 3,656,439 words. 
